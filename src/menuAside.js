@@ -1,7 +1,7 @@
 import {
   mdiAccountCircle,
   mdiMonitor,
-  mdiGithub,
+  mdiLifebuoy,
   mdiLock,
   mdiAlertCircle,
   mdiSquareEditOutline,
@@ -9,71 +9,83 @@ import {
   mdiViewList,
   mdiTelevisionGuide,
   mdiResponsive,
-  mdiPalette
-} from '@mdi/js'
+  mdiPalette,
+  mdiReceiptTextCheck,
+} from "@mdi/js";
 
 export default [
   {
-    to: '/dashboard',
+    to: "/dashboard",
     icon: mdiMonitor,
-    label: 'Dashboard'
+    label: "Dashboard",
   },
+  // {
+  //   to: "/tables",
+  //   label: "Tables",
+  //   icon: mdiTable,
+  // },
+  // {
+  //   to: "/forms",
+  //   label: "Forms",
+  //   icon: mdiSquareEditOutline,
+  // },
+  // {
+  //   to: "/ui",
+  //   label: "UI",
+  //   icon: mdiTelevisionGuide,
+  // },
+  // {
+  //   to: "/responsive",
+  //   label: "Responsive",
+  //   icon: mdiResponsive,
+  // },
+  // {
+  //   to: "/",
+  //   label: "Styles",
+  //   icon: mdiPalette,
+  // },
+
+  // {
+  //   to: "/login",
+  //   label: "Login",
+  //   icon: mdiLock,
+  // },
+  // {
+  //   to: "/error",
+  //   label: "Error",
+  //   icon: mdiAlertCircle,
+  // },
   {
-    to: '/tables',
-    label: 'Tables',
-    icon: mdiTable
-  },
-  {
-    to: '/forms',
-    label: 'Forms',
-    icon: mdiSquareEditOutline
-  },
-  {
-    to: '/ui',
-    label: 'UI',
-    icon: mdiTelevisionGuide
-  },
-  {
-    to: '/responsive',
-    label: 'Responsive',
-    icon: mdiResponsive
-  },
-  {
-    to: '/',
-    label: 'Styles',
-    icon: mdiPalette
-  },
-  {
-    to: '/profile',
-    label: 'Profile',
-    icon: mdiAccountCircle
-  },
-  {
-    to: '/login',
-    label: 'Login',
-    icon: mdiLock
-  },
-  {
-    to: '/error',
-    label: 'Error',
-    icon: mdiAlertCircle
-  },
-  {
-    label: 'Dropdown',
+    label: "Data",
     icon: mdiViewList,
     menu: [
       {
-        label: 'Item One'
+        to: "/departements",
+        label: "Departements",
       },
       {
-        label: 'Item Two'
-      }
-    ]
+        to: "/error",
+        label: "Etudiants",
+      },
+      {
+        to: "/error",
+        label: "Professeurs",
+      },
+    ],
   },
   {
-    href: 'https://github.com/justboil/admin-one-vue-tailwind',
-    label: 'GitHub',
-    icon: mdiGithub,
-    target: '_blank'
-  }
-]
+    to: "/profile",
+    label: "PV..",
+    icon: mdiReceiptTextCheck,
+  },
+  {
+    to: "/profile",
+    label: "Profil",
+    icon: mdiAccountCircle,
+  },
+  {
+    href: "https://github.com/justboil/admin-one-vue-tailwind",
+    label: "Aide",
+    icon: mdiLifebuoy,
+  },
+];
