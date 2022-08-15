@@ -41,7 +41,12 @@ const items = computed(() => dataTable.value);
           small
         /> -->
       </SectionTitleLineWithButton>
-      <CardBox :icon="mdiTownHall" title="table departements" has-table>
+      <CardBox
+        :icon="mdiTownHall"
+        title="table departements"
+        has-table
+        url="/departements/add"
+      >
         <div v-if="items.length">
           <TableSampleClients :dataTable="JSON.parse(JSON.stringify(items))" />
         </div>

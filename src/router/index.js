@@ -32,12 +32,12 @@ const routes = [
   {
     path: "/departements/:id",
     name: "edit-departements",
-    component: () => import("@/views/Departements/Edit.vue"),
+    component: () => import("@/views/departements/Edit.vue"),
   },
   {
     path: "/departements/add",
     name: "add-departements",
-    component: () => import("@/views/Departements/Create.vue"),
+    component: () => import("@/views/departements/Create.vue"),
   },
   {
     meta: {
