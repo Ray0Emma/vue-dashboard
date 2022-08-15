@@ -1,35 +1,35 @@
 /* eslint-disable */
 import axios from "axios";
 
-const INSTRUCTOR = "departement";
-const API_URL = "http://localhost:8080";
-const INSTRUCTOR_API_URL = `${API_URL}/${INSTRUCTOR}`;
-
 class BaseDataService {
-  retrieveAllData() {
-    return axios.get(`${INSTRUCTOR_API_URL}`);
+  // INSTRUCTOR = "departement";
+  API_URL = "http://localhost:8080";
+  // INSTRUCTOR_API_URL = `${this.API_URL}/${this.INSTRUCTOR}`;
+
+  retrieveAllData(INSTRUCTOR) {
+    return axios.get(`${this.API_URL}/${INSTRUCTOR}`);
   }
 
-  deleteData(id) {
-    return axios.delete(`${INSTRUCTOR_API_URL}/${id}`);
+  deleteData(INSTRUCTOR, id) {
+    return axios.delete(`${this.API_URL}/${INSTRUCTOR}/${id}`);
   }
 
-  retrieveData(id) {
-    return axios.get(`${INSTRUCTOR_API_URL}/${id}`);
+  retrieveData(INSTRUCTOR, id) {
+    return axios.get(`$${this.API_URL}/${INSTRUCTOR}/${id}`);
   }
-  updateData(id, course) {
-    return axios.patch(`${INSTRUCTOR_API_URL}/${id}`, course);
-  }
-
-  createData(course) {
-    return axios.post(`${INSTRUCTOR_API_URL}/`, course);
+  updateData(INSTRUCTOR, id, course) {
+    return axios.patch(`${this.API_URL}/${INSTRUCTOR}/${id}`, course);
   }
 
-  uploadFile(file) {
-    return axios.post(`${INSTRUCTOR_API_URL}/uploadFile`, file);
+  createData(INSTRUCTOR, course) {
+    return axios.post(`${this.API_URL}/${INSTRUCTOR}/`, course);
+  }
+
+  uploadFile(INSTRUCTOR, file) {
+    return axios.post(`${this.API_URL}/${INSTRUCTOR}/uploadFile`, file);
   }
   // saveData(model) {
-  //   return axios.get(`${INSTRUCTOR_API_URL}/saveData`, model);
+  //   return axios.get(`${this.INSTRUCTOR_API_URL}/saveData`, model);
   // }
 }
 
