@@ -1,27 +1,32 @@
 <script setup>
 import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
-import { mdiTownHall, mdiPlusCircle } from "@mdi/js";
+import { mdiTownHall, mdiPlusCircle, mdiBallot, mdiAccount } from "@mdi/js";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
 import BaseButton from "@/components/BaseButton.vue";
-import CardBox from "@/components/CardBox.vue";
 import TableSampleClients from "@/components/TableSampleClients.vue";
 import DepartementDataService from "@/services/DepartementDataService";
-import { computed, ref } from "vue";
+import { computed, reactive, ref } from "vue";
+import CardBox from "@/components/CardBox.vue";
+import FormField from "@/components/FormField.vue";
+import FormControl from "@/components/FormControl.vue";
+import BaseButtons from "@/components/BaseButtons.vue";
+import router from "@/router";
 
-const departement = ref({
+const departement = reactive({
   id: null,
   name: "",
 });
 
-const saveCustomer = () => {
+const submit = () => {
   const data = {
-    id: departement.value.id,
-    name: departement.value.name,
+    id: departement.id,
+    name: departement.name,
   };
   DepartementDataService.createData("departement", data)
     .then((response) => {
-      departement.value.id = response.data.id;
+      departement.id = response.data.id;
+      router.back();
     })
     .catch((e) => {
       alert(e);
@@ -38,6 +43,17 @@ const saveCustomer = () => {
         main
       >
       </SectionTitleLineWithButton>
+      <CardBox title="Forms" :icon="mdiBallot" form @submit.prevent="submit">
+        <FormField label="please enter departement name">
+          <FormControl v-model="departement.name" :icon="mdiAccount" />
+        </FormField>
+        <template #footer>
+          <BaseButtons>
+            <BaseButton type="submit" color="info" label="Submit" />
+            <BaseButton type="reset" color="info" outline label="Reset" />
+          </BaseButtons>
+        </template>
+      </CardBox>
     </SectionMain>
   </LayoutAuthenticated>
 </template>
