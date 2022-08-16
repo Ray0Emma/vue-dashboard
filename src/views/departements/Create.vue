@@ -26,7 +26,7 @@ const submit = () => {
   DepartementDataService.createData("departement", data)
     .then((response) => {
       departement.id = response.data.id;
-      router.push("/departement");
+      router.push("/departements");
     })
     .catch((e) => {
       alert(e);
