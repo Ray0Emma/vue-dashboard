@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, toRaw } from "vue";
+import { computed, ref, toRaw, onMounted } from "vue";
 import { useMainStore } from "@/stores/main";
 import { useStyleStore } from "@/stores/style";
 import { mdiEye, mdiTrashCan } from "@mdi/js";
@@ -9,8 +9,12 @@ import BaseLevel from "@/components/BaseLevel.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import BaseButton from "@/components/BaseButton.vue";
 
+import DepartementDataService from "@/services/DepartementDataService";
+import router from "@/router";
+
 const props = defineProps({
   dataTable: Object,
+  instructor: String,
 });
 
 const styleStore = useStyleStore();
@@ -20,6 +24,8 @@ console.log(props.dataTable);
 const items = computed(() =>
   props.dataTable ? props.dataTable : mainStore.clients
 );
+
+const myId = ref(null);
 
 const isModalActive = ref(false);
 
@@ -50,17 +56,33 @@ const pagesList = computed(() => {
   return pagesList;
 });
 
-const remove = (arr, cb) => {
-  const newArr = [];
-
-  arr.forEach((item) => {
-    if (!cb(item)) {
-      newArr.push(item);
-    }
-  });
-
-  return newArr;
+const getId = (id) => {
+  myId.value = id;
+  console.log(id);
 };
+
+const remove = (inst, id) => {
+  // console.log(myId.value);
+  DepartementDataService.deleteData(inst, id).then(() => {
+    router.push("/departements");
+  });
+};
+
+const goUpdate = (id) => {
+  router.push("/departements/" + id);
+};
+
+// const remove = (arr, cb) => {
+//   const newArr = [];
+
+//   arr.forEach((item) => {
+//     if (!cb(item)) {
+//       newArr.push(item);
+//     }
+//   });
+
+//   return newArr;
+// };
 </script>
 
 <template>
@@ -72,6 +94,7 @@ const remove = (arr, cb) => {
   <CardBoxModal
     v-model="isModalDangerActive"
     large-title="Please confirm"
+    @confirm="remove(instructor, myId)"
     button="danger"
     has-cancel
   >
@@ -125,13 +148,13 @@ const remove = (arr, cb) => {
               color="info"
               :icon="mdiEye"
               small
-              @click="isModalActive = true"
+              @click="goUpdate(client.id)"
             />
             <BaseButton
               color="danger"
               :icon="mdiTrashCan"
               small
-              @click="isModalDangerActive = true"
+              @click="(isModalDangerActive = true), getId(client.id)"
             />
           </BaseButtons>
         </td>

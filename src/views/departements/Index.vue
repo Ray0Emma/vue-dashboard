@@ -48,7 +48,10 @@ const items = computed(() => dataTable.value);
         url="/departements/add"
       >
         <div v-if="items.length">
-          <TableSampleClients :dataTable="JSON.parse(JSON.stringify(items))" />
+          <TableSampleClients
+            :dataTable="JSON.parse(JSON.stringify(items))"
+            instructor="departement"
+          />
         </div>
       </CardBox>
     </SectionMain>

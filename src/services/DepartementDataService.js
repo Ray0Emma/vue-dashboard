@@ -15,7 +15,7 @@ class BaseDataService {
   }
 
   retrieveData(INSTRUCTOR, id) {
-    return axios.get(`$${this.API_URL}/${INSTRUCTOR}/${id}`);
+    return axios.get(`${this.API_URL}/${INSTRUCTOR}/${id}`);
   }
   updateData(INSTRUCTOR, id, course) {
     return axios.patch(`${this.API_URL}/${INSTRUCTOR}/${id}`, course);

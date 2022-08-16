@@ -1,28 +1,27 @@
 <script setup>
-import { computed } from 'vue'
-import { containerMaxW } from '@/config.js';
-import BaseLevel from '@/components/BaseLevel.vue'
-import JustboilLogo from '@/components/JustboilLogo.vue'
+import { computed } from "vue";
+import { containerMaxW } from "@/config.js";
+import BaseLevel from "@/components/BaseLevel.vue";
+import JustboilLogo from "@/components/JustboilLogo.vue";
 
-const year = computed(() => new Date().getFullYear())
+const year = computed(() => new Date().getFullYear());
 </script>
 
 <template>
-  <footer
-    class="py-2 px-6"
-    :class="containerMaxW"
-  >
+  <footer class="py-2 px-6 sticky top-[100vh] bottom-0" :class="containerMaxW">
     <BaseLevel>
       <div class="text-center md:text-left">
-        <b>&copy;{{ year }}, <a
-          href="https://justboil.me/"
-          target="_blank"
-        >JustBoil.me</a>.</b>
-        Get more with <a
+        <b
+          >&copy;{{ year }},
+          <a href="https://justboil.me/" target="_blank">JustBoil.me</a>.</b
+        >
+        Get more with
+        <a
           href="https://tailwind-vue.justboil.me/"
           target="_blank"
           class="text-blue-600"
-        >Premium version</a>
+          >Premium version</a
+        >
       </div>
       <div class="md:py-2">
         <a href="https://justboil.me">
