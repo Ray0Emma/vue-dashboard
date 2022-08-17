@@ -8,8 +8,32 @@ import CardBox from "@/components/CardBox.vue";
 import TableSampleClients from "@/components/TableSampleClients.vue";
 import DepartementDataService from "@/services/DepartementDataService";
 import { computed, ref } from "vue";
+import router from "@/router";
 
 const dataTable = ref([]);
+const file = ref(null);
+const upload = (event) => {
+  const value = event.target.files || event.dataTransfer.files;
+
+  file.value = value[0];
+  // this.$emit("update:modelValue", file.value);
+  let formData = new FormData();
+  formData.append("file", file.value);
+  DepartementDataService.uploadFile("departement", formData).then(
+    (response) => {
+      DepartementDataService.retrieveAllData("departement")
+        .then((response) => {
+          dataTable.value = response.data;
+        })
+        .catch((e) => {
+          alert(e);
+        });
+      router.push("/departements");
+    }
+  );
+
+  // Use this as an example for handling file uploads
+};
 
 DepartementDataService.retrieveAllData("departement")
   .then((response) => {
@@ -28,11 +52,15 @@ const items = computed(() => dataTable.value);
       <SectionTitleLineWithButton :icon="mdiTownHall" title="Departements" main>
         <BaseButton
           :icon="mdiPlusCircle"
-          label="Nouveau departement"
+          label="Import Excel"
           color="contrast"
           rounded-full
           small
-        />
+        >
+          <!-- <form @submit="submit"> -->
+          <input type="file" ref="input" @input="upload" />
+          <!-- </form> -->
+        </BaseButton>
         <!-- <BaseButton
           :icon="mdiPlusCircle"
           label="Import departement"

@@ -64,6 +64,11 @@ const getId = (id) => {
 const remove = (inst, id) => {
   // console.log(myId.value);
   DepartementDataService.deleteData(inst, id).then(() => {
+    DepartementDataService.retrieveAllData(inst).then((r) => {
+      if (r.data) {
+        items.value = r.data;
+      }
+    });
     router.push("/departements");
   });
 };
