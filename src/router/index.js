@@ -41,6 +41,42 @@ const routes = [
   },
   {
     meta: {
+      title: "Etudiants",
+    },
+    path: "/students",
+    name: "students",
+    component: () => import("@/views/students/Index.vue"),
+  },
+  {
+    path: "/students/:id",
+    name: "edit-students",
+    component: () => import("@/views/students/Edit.vue"),
+  },
+  {
+    path: "/students/add",
+    name: "add-students",
+    component: () => import("@/views/students/Create.vue"),
+  },
+  {
+    meta: {
+      title: "Departements",
+    },
+    path: "/departements",
+    name: "departements",
+    component: () => import("@/views/departements/Index.vue"),
+  },
+  {
+    path: "/departements/:id",
+    name: "edit-departements",
+    component: () => import("@/views/departements/Edit.vue"),
+  },
+  {
+    path: "/departements/add",
+    name: "add-departements",
+    component: () => import("@/views/departements/Create.vue"),
+  },
+  {
+    meta: {
       title: "Profile",
     },
     path: "/profile",
