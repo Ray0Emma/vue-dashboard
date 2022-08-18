@@ -20,7 +20,7 @@ const departement = reactive({
 });
 const getData = () => {
   console.log("hi1");
-  DepartementDataService.retrieveData("departement", departement.id)
+  DepartementDataService.retrieveData("departments", departement.id)
     .then((resp) => {
       console.log("hi2");
       departement.name = resp.data.name;
@@ -40,9 +40,9 @@ const submit = () => {
     id: departement.id,
     name: departement.name,
   };
-  DepartementDataService.updateData("departement", data.id, data)
+  DepartementDataService.updateData("departments", data.id, data)
     .then(() => {
-      router.push("/departements");
+      router.push("/departments");
     })
     .catch((e) => {
       alert(e);

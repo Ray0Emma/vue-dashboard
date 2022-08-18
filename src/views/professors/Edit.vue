@@ -6,27 +6,43 @@ import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.
 import BaseButton from "@/components/BaseButton.vue";
 import TableSampleClients from "@/components/TableSampleClients.vue";
 import DepartementDataService from "@/services/DepartementDataService";
-import { computed, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import CardBox from "@/components/CardBox.vue";
 import FormField from "@/components/FormField.vue";
 import FormControl from "@/components/FormControl.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import router from "@/router";
+import { useRoute } from "vue-router";
 
 const departement = reactive({
-  id: null,
+  id: useRoute().params.id,
   name: "",
 });
+const getData = () => {
+  console.log("hi1");
+  DepartementDataService.retrieveData("professors", departement.id)
+    .then((resp) => {
+      console.log("hi2");
+      departement.name = resp.data.nom;
+    })
+    .catch((e) => {
+      alert(e);
+    });
+  console.log("hi3");
+};
 
+onMounted(() => {
+  getData();
+});
+// console.log(departement.id);
 const submit = () => {
   const data = {
     id: departement.id,
     name: departement.name,
   };
-  DepartementDataService.createData("departments", data)
-    .then((response) => {
-      departement.id = response.data.id;
-      router.push("/departments");
+  DepartementDataService.updateData("professors", data.id, data)
+    .then(() => {
+      router.push("/professors");
     })
     .catch((e) => {
       alert(e);
@@ -39,13 +55,13 @@ const submit = () => {
     <SectionMain>
       <SectionTitleLineWithButton
         :icon="mdiTownHall"
-        title="Neauvau Departement"
+        title="Neauvau Professeurs"
         main
       >
       </SectionTitleLineWithButton>
       <CardBox title="Forms" :icon="mdiBallot" form @submit.prevent="submit">
         <FormField label="please enter departement name">
-          <FormControl v-model="departement.name" :icon="mdiAccount" />
+          <FormControl v-model="departement.nom" :icon="mdiAccount" />
         </FormField>
         <template #footer>
           <BaseButtons>

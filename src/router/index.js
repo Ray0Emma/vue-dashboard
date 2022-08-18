@@ -25,18 +25,18 @@ const routes = [
     meta: {
       title: "Departements",
     },
-    path: "/departements",
-    name: "departements",
+    path: "/departments",
+    name: "departments",
     component: () => import("@/views/departements/Index.vue"),
   },
   {
-    path: "/departements/:id",
-    name: "edit-departements",
+    path: "/departments/:id",
+    name: "edit-departments",
     component: () => import("@/views/departements/Edit.vue"),
   },
   {
-    path: "/departements/add",
-    name: "add-departements",
+    path: "/departments/add",
+    name: "add-departments",
     component: () => import("@/views/departements/Create.vue"),
   },
   {
@@ -45,35 +45,35 @@ const routes = [
     },
     path: "/students",
     name: "students",
-    component: () => import("@/views/students/Index.vue"),
+    component: () => import("@/views/Students/Index.vue"),
   },
   {
     path: "/students/:id",
     name: "edit-students",
-    component: () => import("@/views/students/Edit.vue"),
+    component: () => import("@/views/Students/Edit.vue"),
   },
   {
     path: "/students/add",
     name: "add-students",
-    component: () => import("@/views/students/Create.vue"),
+    component: () => import("@/views/Students/Create.vue"),
   },
   {
     meta: {
-      title: "Departements",
+      title: "Professors",
     },
-    path: "/departements",
-    name: "departements",
-    component: () => import("@/views/departements/Index.vue"),
+    path: "/professors",
+    name: "professors",
+    component: () => import("@/views/Professors/Index.vue"),
   },
   {
-    path: "/departements/:id",
-    name: "edit-departements",
-    component: () => import("@/views/departements/Edit.vue"),
+    path: "/professors/:id",
+    name: "edit-professors",
+    component: () => import("@/views/Professors/Edit.vue"),
   },
   {
-    path: "/departements/add",
-    name: "add-departements",
-    component: () => import("@/views/departements/Create.vue"),
+    path: "/professors/add",
+    name: "add-professors",
+    component: () => import("@/views/Professors/Create.vue"),
   },
   {
     meta: {

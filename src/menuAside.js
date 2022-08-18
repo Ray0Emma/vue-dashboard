@@ -60,15 +60,15 @@ export default [
     icon: mdiViewList,
     menu: [
       {
-        to: "/departements",
+        to: "/departments",
         label: "Departements",
       },
       {
-        to: "/error",
+        to: "/students",
         label: "Etudiants",
       },
       {
-        to: "/error",
+        to: "/professors",
         label: "Professeurs",
       },
     ],

@@ -23,10 +23,10 @@ const submit = () => {
     id: departement.id,
     name: departement.name,
   };
-  DepartementDataService.createData("departments", data)
+  DepartementDataService.createData("professors", data)
     .then((response) => {
       departement.id = response.data.id;
-      router.push("/departments");
+      router.push("/professors");
     })
     .catch((e) => {
       alert(e);
@@ -39,12 +39,12 @@ const submit = () => {
     <SectionMain>
       <SectionTitleLineWithButton
         :icon="mdiTownHall"
-        title="Neauvau Departement"
+        title="Neauvau professors"
         main
       >
       </SectionTitleLineWithButton>
       <CardBox title="Forms" :icon="mdiBallot" form @submit.prevent="submit">
-        <FormField label="please enter departement name">
+        <FormField label="please enter professor name">
           <FormControl v-model="departement.name" :icon="mdiAccount" />
         </FormField>
         <template #footer>

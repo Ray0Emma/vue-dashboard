@@ -19,23 +19,21 @@ const upload = (event) => {
   // this.$emit("update:modelValue", file.value);
   let formData = new FormData();
   formData.append("file", file.value);
-  DepartementDataService.uploadFile("departments", formData).then(
-    (response) => {
-      DepartementDataService.retrieveAllData("departments")
-        .then((response) => {
-          dataTable.value = response.data;
-        })
-        .catch((e) => {
-          alert(e);
-        });
-      router.push("/departments");
-    }
-  );
+  DepartementDataService.uploadFile("professors", formData).then((response) => {
+    DepartementDataService.retrieveAllData("professors")
+      .then((response) => {
+        dataTable.value = response.data;
+      })
+      .catch((e) => {
+        alert(e);
+      });
+    router.push("/professors");
+  });
 
   // Use this as an example for handling file uploads
 };
 
-DepartementDataService.retrieveAllData("departments")
+DepartementDataService.retrieveAllData("professors")
   .then((response) => {
     dataTable.value = response.data;
   })
@@ -49,7 +47,7 @@ const items = computed(() => dataTable.value);
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiTownHall" title="Departements" main>
+      <SectionTitleLineWithButton :icon="mdiTownHall" title="Professors" main>
         <BaseButton
           :icon="mdiPlusCircle"
           label="Import Excel"
@@ -71,14 +69,14 @@ const items = computed(() => dataTable.value);
       </SectionTitleLineWithButton>
       <CardBox
         :icon="mdiTownHall"
-        title="table departements"
+        title="table professors"
         has-table
-        url="/departments/add"
+        url="/professors/add"
       >
         <div v-if="items.length">
           <TableSampleClients
             :dataTable="JSON.parse(JSON.stringify(items))"
-            instructor="departments"
+            instructor="professors"
           />
         </div>
       </CardBox>

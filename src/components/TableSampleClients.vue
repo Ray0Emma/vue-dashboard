@@ -69,12 +69,12 @@ const remove = (inst, id) => {
         items.value = r.data;
       }
     });
-    router.push("/departements");
+    router.push("/" + props.instructor);
   });
 };
 
 const goUpdate = (id) => {
-  router.push("/departements/" + id);
+  router.push("/" + props.instructor + "/" + id);
 };
 
 // const remove = (arr, cb) => {
