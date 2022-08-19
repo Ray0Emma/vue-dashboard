@@ -54,9 +54,15 @@ const items = computed(() => dataTable.value);
           color="contrast"
           rounded-full
           small
+          class="relative"
         >
           <!-- <form @submit="submit"> -->
-          <input type="file" ref="input" @input="upload" />
+          <input
+            type="file"
+            ref="input"
+            @input="upload"
+            class="absolute opacity-0"
+          />
           <!-- </form> -->
         </BaseButton>
         <!-- <BaseButton

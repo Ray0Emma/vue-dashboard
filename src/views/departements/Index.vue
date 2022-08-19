@@ -50,17 +50,23 @@ const items = computed(() => dataTable.value);
   <LayoutAuthenticated>
     <SectionMain>
       <SectionTitleLineWithButton :icon="mdiTownHall" title="Departements" main>
-        <BaseButton
+        <!-- <BaseButton
           :icon="mdiPlusCircle"
           label="Import Excel"
           color="contrast"
           rounded-full
           small
-        >
-          <!-- <form @submit="submit"> -->
-          <input type="file" ref="input" @input="upload" />
-          <!-- </form> -->
-        </BaseButton>
+          class="relative"
+        > -->
+        <!-- <form @submit="submit"> -->
+        <!-- <input
+            type="file"
+            ref="input"
+            @input="upload"
+            class="absolute opacity-0"
+          /> -->
+        <!-- </form> -->
+        <!-- </BaseButton> -->
         <!-- <BaseButton
           :icon="mdiPlusCircle"
           label="Import departement"
