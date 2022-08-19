@@ -1,50 +1,53 @@
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 import {
   mdiForwardburger,
   mdiBackburger,
   mdiClose,
   mdiDotsVertical,
   mdiMenu,
-} from '@mdi/js'
-import { containerMaxW } from '@/config.js'
-import { useLayoutStore } from '@/stores/layout.js'
-import BaseIcon from '@/components/BaseIcon.vue'
-import FormControl from '@/components/FormControl.vue'
-import NavBarMenuList from '@/components/NavBarMenuList.vue'
-import NavBarItemPlain from '@/components/NavBarItemPlain.vue'
+} from "@mdi/js";
+import { containerMaxW } from "@/config.js";
+import { useLayoutStore } from "@/stores/layout.js";
+import BaseIcon from "@/components/BaseIcon.vue";
+import FormControl from "@/components/FormControl.vue";
+import NavBarMenuList from "@/components/NavBarMenuList.vue";
+import NavBarItemPlain from "@/components/NavBarItemPlain.vue";
 
 defineProps({
   menu: {
     type: Array,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
-const emit = defineEmits(['menu-click'])
+const emit = defineEmits(["menu-click"]);
 
 const menuClick = (event, item) => {
-  emit('menu-click', event, item)
-}
+  emit("menu-click", event, item);
+};
 
-const layoutStore = useLayoutStore()
+const layoutStore = useLayoutStore();
 
-const isMenuNavBarActive = ref(false)
+const isMenuNavBarActive = ref(false);
 </script>
 
 <template>
-  <nav class="top-0 inset-x-0 fixed bg-gray-50 h-14 z-30 transition-position w-screen lg:w-auto dark:bg-slate-800">
-    <div
-      class="flex lg:items-stretch"
-      :class="containerMaxW"
-    >
+  <nav
+    class="top-0 inset-x-0 fixed bg-gray-50 h-14 z-30 transition-position w-screen lg:w-auto dark:bg-slate-800"
+  >
+    <div class="flex lg:items-stretch" :class="containerMaxW">
       <div class="flex flex-1 items-stretch h-14">
         <NavBarItemPlain
           display="flex lg:hidden"
           @click.prevent="layoutStore.asideMobileToggle()"
         >
           <BaseIcon
-            :path="layoutStore.isAsideMobileExpanded ? mdiBackburger : mdiForwardburger"
+            :path="
+              layoutStore.isAsideMobileExpanded
+                ? mdiBackburger
+                : mdiForwardburger
+            "
             size="24"
           />
         </NavBarItemPlain>
@@ -52,22 +55,21 @@ const isMenuNavBarActive = ref(false)
           display="hidden lg:flex xl:hidden"
           @click.prevent="layoutStore.isAsideLgActive = true"
         >
-          <BaseIcon
-            :path="mdiMenu"
-            size="24"
-          />
+          <BaseIcon :path="mdiMenu" size="24" />
         </NavBarItemPlain>
-        <NavBarItemPlain use-margin>
+        <!-- <NavBarItemPlain use-margin>
           <FormControl
             placeholder="Search (ctrl+k)"
             ctrl-k-focus
             transparent
             borderless
           />
-        </NavBarItemPlain>
+        </NavBarItemPlain> -->
       </div>
       <div class="flex-none items-stretch flex h-14 lg:hidden">
-        <NavBarItemPlain @click.prevent="isMenuNavBarActive = !isMenuNavBarActive">
+        <NavBarItemPlain
+          @click.prevent="isMenuNavBarActive = !isMenuNavBarActive"
+        >
           <BaseIcon
             :path="isMenuNavBarActive ? mdiClose : mdiDotsVertical"
             size="24"
@@ -78,10 +80,7 @@ const isMenuNavBarActive = ref(false)
         class="max-h-screen-menu overflow-y-auto lg:overflow-visible absolute w-screen top-14 left-0 bg-gray-50 shadow-lg lg:w-auto lg:flex lg:static lg:shadow-none dark:bg-slate-800"
         :class="[isMenuNavBarActive ? 'block' : 'hidden']"
       >
-        <NavBarMenuList
-          :menu="menu"
-          @menu-click="menuClick"
-        />
+        <NavBarMenuList :menu="menu" @menu-click="menuClick" />
       </div>
     </div>
   </nav>
