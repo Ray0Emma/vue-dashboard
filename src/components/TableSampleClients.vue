@@ -76,18 +76,6 @@ const remove = (inst, id) => {
 const goUpdate = (id) => {
   router.push("/" + props.instructor + "/" + id);
 };
-
-// const remove = (arr, cb) => {
-//   const newArr = [];
-
-//   arr.forEach((item) => {
-//     if (!cb(item)) {
-//       newArr.push(item);
-//     }
-//   });
-
-//   return newArr;
-// };
 </script>
 
 <template>
@@ -110,42 +98,44 @@ const goUpdate = (id) => {
   <table>
     <thead>
       <tr>
-        <th />
-        <th>Name</th>
-        <th>Company</th>
-        <th>City</th>
-        <th>Progress</th>
-        <th>Created</th>
+        <th>
+          <span v-if="instructor != 'departments'">Nom et Prenom</span>
+          <span v-if="instructor == 'departments'">Nom</span>
+        </th>
+        <th>
+          <span v-if="instructor != 'departments'">CIN</span>
+        </th>
+        <th>
+          <span v-if="instructor != 'departments'">CNE</span>
+        </th>
+        <th>
+          <span v-if="instructor == 'students'">Apogée</span>
+          <span v-if="instructor == 'professors'">Grade</span>
+        </th>
+        <th v-if="instructor != 'departments'">Date de naissance</th>
+        <th v-if="instructor != 'departments'">Téléphone</th>
         <th />
       </tr>
     </thead>
     <tbody>
       <tr v-for="client in itemsPaginated" :key="client.id">
-        <td class="border-b-0 lg:w-6 before:hidden"></td>
-        <td data-label="Name">
-          {{ client.name }}
+        <td>{{ client.nom }} {{ client.prenom }}</td>
+        <td v-if="client.cin">
+          {{ client.cin }}
         </td>
-        <td data-label="Company">
-          {{ client.company }}
+        <td v-if="client.cne">{{ client.cne }}</td>
+        <td class="lg:w-32" v-if="client.nbApogee || client.grade">
+          {{ client.nbApogee }}
+          <!-- {{ client.filiere }} -->
+          {{ client.grade }}
         </td>
-        <td data-label="City">
-          {{ client.city }}
+        <td v-if="client.dateDeNaissance">
+          {{ client.dateDeNaissance }}
         </td>
-        <td data-label="Progress" class="lg:w-32">
-          <progress
-            class="flex w-2/5 self-center lg:w-full"
-            max="100"
-            :value="client.progress"
-          >
-            {{ client.progress }}
-          </progress>
-        </td>
-        <td data-label="Created" class="lg:w-1 whitespace-nowrap">
-          <small
-            class="text-gray-500 dark:text-slate-400"
-            :title="client.created"
-            >{{ client.created }}</small
-          >
+        <td class="lg:w-1 whitespace-nowrap" v-if="client.telephone">
+          <small class="text-gray-500 dark:text-slate-400">{{
+            client.telephone
+          }}</small>
         </td>
         <td class="before:hidden lg:w-1 whitespace-nowrap">
           <BaseButtons type="justify-start lg:justify-end" no-wrap>
