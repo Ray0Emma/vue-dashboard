@@ -2,7 +2,7 @@
 import { computed, ref, toRaw, onMounted } from "vue";
 import { useMainStore } from "@/stores/main";
 import { useStyleStore } from "@/stores/style";
-import { mdiEye, mdiTrashCan } from "@mdi/js";
+import { mdiPen, mdiTrashCan } from "@mdi/js";
 import CardBoxModal from "@/components/CardBoxModal.vue";
 import TableCheckboxCell from "@/components/TableCheckboxCell.vue";
 import BaseLevel from "@/components/BaseLevel.vue";
@@ -79,20 +79,20 @@ const goUpdate = (id) => {
 </script>
 
 <template>
-  <CardBoxModal v-model="isModalActive" title="Sample modal">
+  <!-- <CardBoxModal v-model="isModalActive" title="Sample modal">
     <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
     <p>This is sample modal</p>
-  </CardBoxModal>
+  </CardBoxModal> -->
 
   <CardBoxModal
     v-model="isModalDangerActive"
-    large-title="Please confirm"
+    large-title="Veuillez confirmer"
     @confirm="remove(instructor, myId)"
     button="danger"
     has-cancel
   >
-    <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
-    <p>This is sample modal</p>
+    <p>Êtes-vous sûr?</p>
+    <p>Vous ne pourrez pas <b>annuler</b> cela !</p>
   </CardBoxModal>
 
   <table>
@@ -102,13 +102,9 @@ const goUpdate = (id) => {
           <span v-if="instructor != 'departments'">Nom et Prenom</span>
           <span v-if="instructor == 'departments'">Nom</span>
         </th>
-        <th>
-          <span v-if="instructor != 'departments'">CIN</span>
-        </th>
-        <th>
-          <span v-if="instructor != 'departments'">CNE</span>
-        </th>
-        <th>
+        <th v-if="instructor != 'departments'">CIN</th>
+        <th v-if="instructor != 'departments'">CNE</th>
+        <th v-if="instructor != 'departments'">
           <span v-if="instructor == 'students'">Apogée</span>
           <span v-if="instructor == 'professors'">Grade</span>
         </th>
@@ -130,7 +126,7 @@ const goUpdate = (id) => {
           {{ client.grade }}
         </td>
         <td v-if="client.dateDeNaissance">
-          {{ client.dateDeNaissance }}
+          {{ client.dateDeNaissance.substring(0, 10) }}
         </td>
         <td class="lg:w-1 whitespace-nowrap" v-if="client.telephone">
           <small class="text-gray-500 dark:text-slate-400">{{
@@ -141,7 +137,7 @@ const goUpdate = (id) => {
           <BaseButtons type="justify-start lg:justify-end" no-wrap>
             <BaseButton
               color="info"
-              :icon="mdiEye"
+              :icon="mdiPen"
               small
               @click="goUpdate(client.id)"
             />
@@ -169,7 +165,9 @@ const goUpdate = (id) => {
           @click="currentPage = page"
         />
       </BaseButtons>
-      <small>Page {{ currentPageHuman }} of {{ numPages }}</small>
+      <small
+        >Page {{ currentPageHuman }} sur {{ numPages }} enregistrements.</small
+      >
     </BaseLevel>
   </div>
 </template>

@@ -50,12 +50,12 @@ const routes = [
   {
     path: "/students/:id",
     name: "edit-students",
-    component: () => import("@/views/Students/Edit.vue"),
+    component: () => import("@/views/students/Edit.vue"),
   },
   {
     path: "/students/add",
     name: "add-students",
-    component: () => import("@/views/Students/Create.vue"),
+    component: () => import("@/views/students/Create.vue"),
   },
   {
     meta: {
@@ -63,17 +63,17 @@ const routes = [
     },
     path: "/professors",
     name: "professors",
-    component: () => import("@/views/Professors/Index.vue"),
+    component: () => import("@/views/professors/Index.vue"),
   },
   {
     path: "/professors/:id",
     name: "edit-professors",
-    component: () => import("@/views/Professors/Edit.vue"),
+    component: () => import("@/views/professors/Edit.vue"),
   },
   {
     path: "/professors/add",
     name: "add-professors",
-    component: () => import("@/views/Professors/Create.vue"),
+    component: () => import("@/views/professors/Create.vue"),
   },
   {
     meta: {

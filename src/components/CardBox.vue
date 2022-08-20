@@ -1,5 +1,5 @@
 <script setup>
-import { mdiCog } from "@mdi/js";
+import { mdiPlusCircle } from "@mdi/js";
 import { computed, useSlots } from "vue";
 import BaseIcon from "@/components/BaseIcon.vue";
 import router from "@/router";
@@ -50,7 +50,7 @@ const componentClass = computed(() => {
   return base;
 });
 
-const computedHeaderIcon = computed(() => props.headerIcon ?? mdiCog);
+const computedHeaderIcon = computed(() => props.headerIcon ?? mdiPlusCircle);
 
 const headerIconClick = () => {
   emit("header-icon-click");
@@ -85,13 +85,14 @@ const submit = (e) => {
         @click="headerIconClick"
       >
         <BaseIcon :path="computedHeaderIcon" />
+        Ajouter
       </button>
     </header>
     <div
       v-if="empty"
       class="text-center py-24 text-gray-500 dark:text-slate-400"
     >
-      <p>Nothing's here…</p>
+      <p>Rien n'est ici…</p>
     </div>
     <div v-else class="flex-1" :class="{ 'p-6': !hasTable }">
       <slot />

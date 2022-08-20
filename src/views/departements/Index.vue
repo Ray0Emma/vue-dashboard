@@ -49,7 +49,7 @@ const items = computed(() => dataTable.value);
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiTownHall" title="Departements" main>
+      <SectionTitleLineWithButton :icon="mdiTownHall" title="Départements" main>
         <!-- <BaseButton
           :icon="mdiPlusCircle"
           label="Import Excel"
@@ -77,7 +77,7 @@ const items = computed(() => dataTable.value);
       </SectionTitleLineWithButton>
       <CardBox
         :icon="mdiTownHall"
-        title="table departements"
+        title="Tableau des départements"
         has-table
         url="/departments/add"
       >

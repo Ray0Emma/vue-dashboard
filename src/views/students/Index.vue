@@ -1,7 +1,7 @@
 <script setup>
 import SectionMain from "@/components/SectionMain.vue";
 import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
-import { mdiTownHall, mdiPlusCircle } from "@mdi/js";
+import { mdiAccountSchool, mdiPlusCircle } from "@mdi/js";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import CardBox from "@/components/CardBox.vue";
@@ -47,10 +47,14 @@ const items = computed(() => dataTable.value);
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiTownHall" title="Etudiants" main>
+      <SectionTitleLineWithButton
+        :icon="mdiAccountSchool"
+        title="Etudiants"
+        main
+      >
         <BaseButton
           :icon="mdiPlusCircle"
-          label="Import Excel"
+          label="Importer Excel"
           color="contrast"
           rounded-full
           small
@@ -74,8 +78,8 @@ const items = computed(() => dataTable.value);
         /> -->
       </SectionTitleLineWithButton>
       <CardBox
-        :icon="mdiTownHall"
-        title="table Etudiants"
+        :icon="mdiAccountSchool"
+        title="tableau des étudiants"
         has-table
         url="/students/add"
       >
