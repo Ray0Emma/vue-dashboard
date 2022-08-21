@@ -19,16 +19,13 @@ const departement = reactive({
   name: "",
 });
 const getData = () => {
-  console.log("hi1");
   DepartementDataService.retrieveData("professors", departement.id)
     .then((resp) => {
-      console.log("hi2");
       departement.name = resp.data.nom;
     })
     .catch((e) => {
       alert(e);
     });
-  console.log("hi3");
 };
 
 onMounted(() => {
@@ -38,7 +35,7 @@ onMounted(() => {
 const submit = () => {
   const data = {
     id: departement.id,
-    name: departement.name,
+    nom: departement.name,
   };
   DepartementDataService.updateData("professors", data.id, data)
     .then(() => {
@@ -55,13 +52,13 @@ const submit = () => {
     <SectionMain>
       <SectionTitleLineWithButton
         :icon="mdiTownHall"
-        title="Neauvau Professeurs"
+        title="Modifier Professeur"
         main
       >
       </SectionTitleLineWithButton>
       <CardBox title="Forms" :icon="mdiBallot" form @submit.prevent="submit">
-        <FormField label="please enter departement name">
-          <FormControl v-model="departement.nom" :icon="mdiAccount" />
+        <FormField label="please enter Professeur name">
+          <FormControl v-model="departement.name" :icon="mdiAccount" />
         </FormField>
         <template #footer>
           <BaseButtons>

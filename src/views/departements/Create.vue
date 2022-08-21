@@ -21,7 +21,7 @@ const departement = reactive({
 const submit = () => {
   const data = {
     id: departement.id,
-    name: departement.name,
+    nom: departement.name,
   };
   DepartementDataService.createData("departments", data)
     .then((response) => {

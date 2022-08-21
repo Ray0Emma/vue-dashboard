@@ -19,16 +19,13 @@ const departement = reactive({
   name: "",
 });
 const getData = () => {
-  console.log("hi1");
   DepartementDataService.retrieveData("departments", departement.id)
     .then((resp) => {
-      console.log("hi2");
-      departement.name = resp.data.name;
+      departement.name = resp.data.nom;
     })
     .catch((e) => {
       alert(e);
     });
-  console.log("hi3");
 };
 
 onMounted(() => {
@@ -38,7 +35,7 @@ onMounted(() => {
 const submit = () => {
   const data = {
     id: departement.id,
-    name: departement.name,
+    nom: departement.name,
   };
   DepartementDataService.updateData("departments", data.id, data)
     .then(() => {
