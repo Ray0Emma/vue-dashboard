@@ -50,7 +50,7 @@ onMounted(() => {
 const submit = () => {
   const data = {
     id: departement.id,
-    name: departement.name,
+    nom: departement.name,
     prenom: departement.prenom,
     telephone: departement.tel,
     cin: departement.cin,
@@ -71,12 +71,12 @@ const submit = () => {
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-      <SectionTitleLineWithButton
+      <!-- <SectionTitleLineWithButton
         :icon="mdiTownHall"
-        title="Neauvau Etudiant"
+        title="Modifier Etudiant"
         main
       >
-      </SectionTitleLineWithButton>
+      </SectionTitleLineWithButton> -->
       <div class="mt-10 sm:mt-0">
         <div class="md:grid md:grid-cols-3 md:gap-6">
           <div class="md:col-span-1">
@@ -87,8 +87,7 @@ const submit = () => {
                 Général
               </h3>
               <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                Les coordonnées de votre client apparaîtront dans les factures
-                et leurs profils.
+                Modifier un Etudiant.
               </p>
             </div>
           </div>
@@ -267,18 +266,6 @@ const submit = () => {
           </div>
         </div>
       </div>
-      <!-- <CardBox title="departements" :icon="mdiBallot" departement @submit.prevent="submit"> -->
-
-      <!-- <departementField label="please enter Etudiant name">
-          <departementControl v-model="departement.name" :icon="mdiAccount" />
-        </departementField>
-        <template #footer>
-          <BaseButtons>
-            <BaseButton type="submit" color="info" label="Submit" />
-            <BaseButton type="reset" color="info" outline label="Reset" />
-          </BaseButtons>
-        </template> -->
-      <!-- </CardBox> -->
     </SectionMain>
   </LayoutAuthenticated>
 </template>

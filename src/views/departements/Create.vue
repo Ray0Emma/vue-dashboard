@@ -37,12 +37,12 @@ const submit = () => {
 <template>
   <LayoutAuthenticated>
     <SectionMain>
-      <SectionTitleLineWithButton
+      <!-- <SectionTitleLineWithButton
         :icon="mdiTownHall"
         title="Neauvau Departement"
         main
       >
-      </SectionTitleLineWithButton>
+      </SectionTitleLineWithButton> -->
       <CardBox title="Forms" :icon="mdiBallot" form @submit.prevent="submit">
         <FormField label="please enter departement name">
           <FormControl v-model="departement.name" :icon="mdiAccount" />
