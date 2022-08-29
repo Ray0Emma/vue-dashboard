@@ -76,6 +76,11 @@ const routes = [
     component: () => import("@/views/professors/Create.vue"),
   },
   {
+    path: "/pv/add",
+    name: "add-pv",
+    component: () => import("@/views/Pvs/Create.vue"),
+  },
+  {
     meta: {
       title: "Profile",
     },

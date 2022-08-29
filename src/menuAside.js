@@ -74,7 +74,7 @@ export default [
     ],
   },
   {
-    to: "/profile",
+    to: "/pv/add",
     label: "PV..",
     icon: mdiReceiptTextCheck,
   },
