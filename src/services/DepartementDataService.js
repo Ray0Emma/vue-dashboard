@@ -25,6 +25,10 @@ class BaseDataService {
     return axios.post(`${this.API_URL}/${INSTRUCTOR}/`, course);
   }
 
+  createPv(INSTRUCTOR, filiere, semester, modul, time) {
+    return axios.get(`${this.API_URL}/${INSTRUCTOR}/${filiere}/${semester}/${modul}/${time}`);
+  }
+
   uploadFile(INSTRUCTOR, file) {
     return axios.post(`${this.API_URL}/${INSTRUCTOR}/uploadFile`, file);
   }

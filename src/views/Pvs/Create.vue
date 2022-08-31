@@ -16,9 +16,12 @@ import router from "@/router";
 
 const form = reactive({
   filiere: "",
+  filiere_id: "",
   semester: "",
+  semester_id: "",
   time: "",
   module: "",
+  module_id: "",
 });
 
 DepartementDataService.retrieveAllData("filiere")
@@ -42,8 +45,30 @@ DepartementDataService.retrieveAllData("Module")
   .catch((e) => {
     alert(e);
   });
+
+const sendFil = (value) => {
+  form.filiere_id = value.target.value;
+};
+const sendSem = (value) => {
+  form.semester_id = value.target.value;
+};
+const sendMod = (value) => {
+  form.module_id = value.target.value;
+};
 const submit = () => {
-  // form.post(route("users.store", props.user.id));
+  DepartementDataService.createPv(
+    "pv",
+    form.filiere_id,
+    form.semester_id,
+    form.module_id,
+    form.time
+  )
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((e) => {
+      alert(e);
+    });
 };
 </script>
 
@@ -92,10 +117,13 @@ const submit = () => {
                         class="sm:col-span-3 grid gap-x-8 gap-y-6 grid-rows-2"
                       >
                         <div class="relative sm:col-span-3 required">
-                          <select-input v-model="form.filiere" label="Filiere">
+                          <select-input
+                            @change="sendFil($event)"
+                            label="Filiere"
+                          >
                             <option
                               v-for="filiere in form.filiere"
-                              :value="filiere.id"
+                              :value="filiere.name"
                             >
                               {{ filiere.name }}
                             </option>
@@ -109,12 +137,12 @@ const submit = () => {
                         </div>
                         <div class="relative sm:col-span-3 required">
                           <select-input
-                            v-model="form.semester"
+                            @change="sendSem($event)"
                             label="Semester"
                           >
                             <option
                               v-for="semester in form.semester"
-                              :value="semester.id"
+                              :value="semester.name"
                             >
                               {{ semester.name }}
                             </option>
@@ -131,13 +159,12 @@ const submit = () => {
                         class="sm:col-span-3 grid gap-x-8 gap-y-6 grid-rows-2"
                       >
                         <div class="relative sm:col-span-3">
-                          
-                            <select-input v-model="form.time" label="Temps">
-                              <option value="8">8</option>
-                              <option value="10">10</option>
-                              <option value="2">2</option>
-                              <option value="4">4</option>
-                            </select-input>
+                          <select-input v-model="form.time" label="Temps">
+                            <option value="8">8</option>
+                            <option value="10">10</option>
+                            <option value="2">2</option>
+                            <option value="4">4</option>
+                          </select-input>
                           <!-- <span v-if="form.errors.time"
                             ><small class="text-red-300">{{
                               form.errors.time
@@ -145,10 +172,10 @@ const submit = () => {
                           > -->
                           <!---->
                         </div>
-                        <select-input v-model="form.module" label="Module">
+                        <select-input @change="sendMod($event)" label="Module">
                           <option
                             v-for="modul in form.module"
-                            :value="modul.id"
+                            :value="modul.name"
                           >
                             {{ modul.name }}
                           </option>
