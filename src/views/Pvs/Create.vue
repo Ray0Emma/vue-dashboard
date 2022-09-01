@@ -56,19 +56,29 @@ const sendMod = (value) => {
   form.module_id = value.target.value;
 };
 const submit = () => {
-  DepartementDataService.createPv(
-    "pv",
-    form.filiere_id,
-    form.semester_id,
-    form.module_id,
-    form.time
-  )
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((e) => {
-      alert(e);
-    });
+  router.push(
+    "/pv/show/" +
+      form.filiere_id +
+      "/" +
+      form.semester_id +
+      "/" +
+      form.module_id +
+      "/" +
+      form.time
+  );
+  // DepartementDataService.createPv(
+  //   "pv",
+  //   form.filiere_id,
+  //   form.semester_id,
+  //   form.module_id,
+  //   form.time
+  // )
+  //   .then((response) => {
+  //     console.log(response.data);
+  //   })
+  //   .catch((e) => {
+  //     alert(e);
+  //   });
 };
 </script>
 
@@ -84,14 +94,28 @@ const submit = () => {
               >
                 Nouveau Pv
               </h1>
+              
             </div>
           </div>
-
           <div class="w-full sm:w-6/12">
             <div
               class="flex flex-wrap flex-col sm:flex-row sm:items-center justify-end sm:space-x-2 sm:rtl:space-x-reverse"
-            ></div>
+            >
+              <a
+                @click=""
+                class="px-3 py-1.5  cursor-pointer sm:mb-0 rounded-xl text-sm font-medium leading-6 bg-violet-600 hover:bg-violet-700 text-white"
+              >
+                Importer l'Excel
+              </a>
+              
+            </div>
           </div>
+
+          <!-- <div class="w-full sm:w-6/12">
+            <div
+              class="flex flex-wrap flex-col sm:flex-row sm:items-center justify-end sm:space-x-2 sm:rtl:space-x-reverse"
+            ></div>
+          </div> -->
         </div>
 
         <div>
