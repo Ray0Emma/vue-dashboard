@@ -33,7 +33,7 @@ class BaseDataService {
     return axios.post(`${this.API_URL}/${INSTRUCTOR}/uploadFile`, file);
   }
   uploadExcel(INSTRUCTOR, file) {
-    return axios.post(`${this.API_URL}/${INSTRUCTOR}/xmap/pv`, file);
+    return axios.post(`${this.API_URL}/${INSTRUCTOR}/upload`, file);
   }
   // saveData(model) {
   //   return axios.get(`${this.INSTRUCTOR_API_URL}/saveData`, model);
