@@ -18,10 +18,10 @@ const file = ref(null);
 const form = reactive({
   filiere: "",
   filiere_id: 4,
-  filiere_name: '',
+  filiere_name: "",
   semester: "",
   semester_id: 4,
-  semester_name: '',
+  semester_name: "",
   time: "",
   module: "",
   module_id: "",
@@ -36,28 +36,28 @@ DepartementDataService.retrieveAllData("filiere")
   });
 const getsem = () => {
   DepartementDataService.retrieveData("semester/filiere", form.filiere_id)
-  .then((response) => {
-    form.semester = response.data;
-  })
-  .catch((e) => {
-    alert(e);
-  });
-}
+    .then((response) => {
+      form.semester = response.data;
+    })
+    .catch((e) => {
+      alert(e);
+    });
+};
 getsem();
 const getmod = () => {
   DepartementDataService.retrieveData("module/filiere", form.semester_id)
-  .then((response) => {
-    form.module = response.data;
-  })
-  .catch((e) => {
-    alert(e);
-  });
-}
+    .then((response) => {
+      form.module = response.data;
+    })
+    .catch((e) => {
+      alert(e);
+    });
+};
 getmod();
 
 const sendFil = (value) => {
   form.filiere_id = value.target.value;
-  console.log(form.filiere_id)
+  console.log(form.filiere_id);
 };
 const sendSem = (value) => {
   form.semester_id = value.target.value;
@@ -87,40 +87,15 @@ const upload = (event) => {
   // Use this as an example for handling file uploads
 };
 
-const submit = () => {
-  DepartementDataService.retrieveData("filiere", form.filiere_id)
-    .then((response) => {
-      console.log(response.data.name)
+const submit = async () => {
+  await DepartementDataService.retrieveData("filiere", form.filiere_id)
+    .then(async (response) => {
+      console.log(response.data.name);
       form.filiere_name = response.data.name;
-      DepartementDataService.retrieveData("semester", form.semester_id)
+      await DepartementDataService.retrieveData("semester", form.semester_id)
         .then((response) => {
-          console.log(response.data.name)
+          console.log(response.data.name);
           form.semester_name = response.data.name;
-
-          router.push(
-            "/pv/show/" +
-            form.filiere_name +
-            "/" +
-            form.semester_name +
-            "/" +
-            form.module_id +
-            "/" +
-            form.time
-          );
-
-          //   DepartementDataService.createPv(
-          //   "pv",
-          //   form.filiere_name,
-          //   form.semester_name,
-          //   form.module_id,
-          //   form.time
-          // )
-          //   .then((response) => {
-          //     console.log(response.data);
-          //   })
-          //   .catch((e) => {
-          //     alert(e);
-          //   });
         })
         .catch((e) => {
           alert(e);
@@ -130,17 +105,18 @@ const submit = () => {
       alert(e);
     });
 
-  // router.push(
-  //   "/pv/show/" +
-  //     form.filiere_id +
-  //     "/" +
-  //     form.semester_id +
-  //     "/" +
-  //     form.module_id +
-  //     "/" +
-  //     form.time
-  // );
-
+  if (form.semester_name != "") {
+    router.push(
+      "/pv/show/" +
+        form.filiere_name +
+        "/" +
+        form.semester_name +
+        "/" +
+        form.module_id +
+        "/" +
+        form.time
+    );
+  }
 };
 </script>
 
@@ -151,17 +127,26 @@ const submit = () => {
         <div class="flex flex-col sm:flex-row items-start justify-between">
           <div class="w-full sm:w-6/12 items-center mb-3 sm:mb-0">
             <div class="flex items-center">
-              <h1 class="flex items-center text-2xl xl:text-5xl text-black dark:text-gray-300 font-light -ml-0.5 mb-5">
+              <h1
+                class="flex items-center text-2xl xl:text-5xl text-black dark:text-gray-300 font-light -ml-0.5 mb-5"
+              >
                 Nouveau Pv
               </h1>
             </div>
           </div>
           <div class="w-full sm:w-6/12">
             <div
-              class="flex flex-wrap flex-col sm:flex-row sm:items-center justify-end sm:space-x-2 sm:rtl:space-x-reverse">
+              class="flex flex-wrap flex-col sm:flex-row sm:items-center justify-end sm:space-x-2 sm:rtl:space-x-reverse"
+            >
               <a
-                class="px-3 py-1.5 cursor-pointer sm:mb-0 rounded-xl text-sm font-medium leading-6 bg-violet-600 hover:bg-violet-700 text-white">
-                <input type="file" ref="input" @input="upload" class="absolute opacity-0" />
+                class="px-3 py-1.5 cursor-pointer sm:mb-0 rounded-xl text-sm font-medium leading-6 bg-violet-600 hover:bg-violet-700 text-white"
+              >
+                <input
+                  type="file"
+                  ref="input"
+                  @input="upload"
+                  class="absolute opacity-0"
+                />
                 Importer l'Excel
               </a>
             </div>
@@ -181,18 +166,31 @@ const submit = () => {
                 <form @submit.prevent="submit" role="form" class="mb-0">
                   <div class="mb-14">
                     <div class="border-b-2 border-gray-200 pb-4">
-                      <h2 class="lg:text-lg font-medium text-black dark:text-gray-300">
+                      <h2
+                        class="lg:text-lg font-medium text-black dark:text-gray-300"
+                      >
                         Generer Pv
                       </h2>
-                      <span class="text-sm font-light text-black dark:text-gray-300">
+                      <span
+                        class="text-sm font-light text-black dark:text-gray-300"
+                      >
                         Ajouter les informations pour generer un pv .
                       </span>
                     </div>
                     <div class="grid sm:grid-cols-6 gap-x-8 gap-y-6 my-3.5">
-                      <div class="sm:col-span-3 grid gap-x-8 gap-y-6 grid-rows-2">
+                      <div
+                        class="sm:col-span-3 grid gap-x-8 gap-y-6 grid-rows-2"
+                      >
                         <div class="relative sm:col-span-3 required">
-                          <select-input v-model="form.filiere_id" @change="sendFil($event), getsem()" label="Filiere">
-                            <option v-for="filiere in form.filiere" :value="filiere.id">
+                          <select-input
+                            v-model="form.filiere_id"
+                            @change="sendFil($event), getsem()"
+                            label="Filiere"
+                          >
+                            <option
+                              v-for="filiere in form.filiere"
+                              :value="filiere.id"
+                            >
                               {{ filiere.name }}
                             </option>
                           </select-input>
@@ -204,8 +202,15 @@ const submit = () => {
                           <!---->
                         </div>
                         <div class="relative sm:col-span-3 required">
-                          <select-input v-model="form.semester_id" @change="sendSem($event), getmod()" label="Semester">
-                            <option v-for="semester in form.semester" :value="semester.id">
+                          <select-input
+                            v-model="form.semester_id"
+                            @change="sendSem($event), getmod()"
+                            label="Semester"
+                          >
+                            <option
+                              v-for="semester in form.semester"
+                              :value="semester.id"
+                            >
                               {{ semester.name }}
                             </option>
                           </select-input>
@@ -217,7 +222,9 @@ const submit = () => {
                           <!---->
                         </div>
                       </div>
-                      <div class="sm:col-span-3 grid gap-x-8 gap-y-6 grid-rows-2">
+                      <div
+                        class="sm:col-span-3 grid gap-x-8 gap-y-6 grid-rows-2"
+                      >
                         <div class="relative sm:col-span-3">
                           <select-input v-model="form.time" label="Temps">
                             <option value="8">8</option>
@@ -233,7 +240,10 @@ const submit = () => {
                           <!---->
                         </div>
                         <select-input @change="sendMod($event)" label="Module">
-                          <option v-for="modul in form.module" :value="modul.name">
+                          <option
+                            v-for="modul in form.module"
+                            :value="modul.name"
+                          >
                             {{ modul.name }}
                           </option>
                         </select-input>
@@ -242,12 +252,16 @@ const submit = () => {
                   </div>
                   <div class="mb-14">
                     <div class="flex items-center justify-end sm:col-span-6">
-                      <a href="/dashboard"
-                        class="px-6 py-1.5 hover:bg-gray-200 hover:text-gray-800 rounded-lg ltr:mr-2 rtl:ml-2">
+                      <a
+                        href="/dashboard"
+                        class="px-6 py-1.5 hover:bg-gray-200 hover:text-gray-800 rounded-lg ltr:mr-2 rtl:ml-2"
+                      >
                         Annuler
                       </a>
-                      <button type="submit"
-                        class="ml-5 relative flex items-center justify-center bg-violet-500 hover:bg-violet-700 px-6 py-1.5 text-base rounded-lg disabled:bg-violet-100">
+                      <button
+                        type="submit"
+                        class="ml-5 relative flex items-center justify-center bg-violet-500 hover:bg-violet-700 px-6 py-1.5 text-base rounded-lg disabled:bg-violet-100"
+                      >
                         <span class=""> Generer </span>
                       </button>
                     </div>
