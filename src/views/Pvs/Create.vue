@@ -34,6 +34,15 @@ DepartementDataService.retrieveAllData("filiere")
   .catch((e) => {
     alert(e);
   });
+
+DepartementDataService.retrieveAllData("ExamenTime")
+  .then((response) => {
+    form.examenTime = response.data;
+  })
+  .catch((e) => {
+    alert(e);
+  });
+
 const getsem = () => {
   DepartementDataService.retrieveData("semester/filiere", form.filiere_id)
     .then((response) => {
@@ -64,6 +73,9 @@ const sendSem = (value) => {
 };
 const sendMod = (value) => {
   form.module_id = value.target.value;
+};
+const sendExmTim = (value) => {
+  form.time = value.target.value;
 };
 
 const upload = (event) => {
@@ -195,11 +207,17 @@ const submit = async () => {
                       </div>
                       <div class="sm:col-span-3 grid gap-x-8 gap-y-6 grid-rows-2">
                         <div class="relative sm:col-span-3">
-                          <select-input v-model="form.time" label="Temps" required>
-                            <option value="8">8</option>
-                            <option value="10">10</option>
-                            <option value="2">2</option>
-                            <option value="4">4</option>
+                          <select-input
+                            @change="sendSem($event)"
+                            label="Time"
+                          >
+                            <option
+                              v-for="time in form.examenTime"
+                              :value="time.time"
+                            >
+                              {{ time.time }}
+                            </option>
+
                           </select-input>
                           <!-- <span v-if="form.errors.time"
                             ><small class="text-red-300">{{
