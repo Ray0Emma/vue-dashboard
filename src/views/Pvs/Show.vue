@@ -59,7 +59,7 @@ const printDiv = () => {
     : frame1.contentDocument;
   frameDoc.document.open();
   frameDoc.document.write(
-    '<!DOCTYPE html><html lang="fr"><head><title>Fiche d\'absense</title>'
+    '<!DOCTYPE html><html lang="fr"><head><title></title>'
   );
   frameDoc.document.write('<link rel="stylesheet" href="/src/css/main.css">');
   frameDoc.document.write("</head><body>");
@@ -181,30 +181,28 @@ const printDiv = () => {
                     </td>
                     <td v-show="0">
                       <div id="print-template">
-                        <div class="row grid grid-rows-2 grid-flow-col gap-1">
-                          <div class="col-100">
+                        <div class="row grid grid-rows-2 grid-flow-col gap-1 pb-5 mb-5">
+                          <div class="col-58 row-span-2">
+                      <div class="text">
+                        <img
+                          src= "http://www.fpbm.ma/new/img/fplogo_145x154.png"
+                          alt="fpbm logo"
+                          class="relative object-contain max-h-32"
+                        />
+                      </div>
+                    </div>
+                          <div class="col-42 row-span-2 text-right mt-1">
                             <div class="text-dark">
                               <h3>Fiche D'absense</h3>
                               <span class="text-sm">A.U</span>
                             </div>
                           </div>
+                           
                         </div>
                         <div
-                          class="row border-b grid grid-rows-2 grid-flow-col gap-1 pb-5 mb-5"
+                          class="row grid grid-rows-2 grid-flow-col gap-1 pb-5 mb-5"
                         >
-                          <!-- <div class="col-58 row-span-2">
-                      <div class="text">
-                        <img
-                          :src="
-                            props.invoice.company.logo
-                              ? '/storage/' + props.invoice.company.logo
-                              : img
-                          "
-                          :alt="props.invoice.company.name"
-                          class="relative object-contain max-h-32"
-                        />
-                      </div>
-                    </div> -->
+                         
                           <div class="col-42 row-span-2">
                             <div class="text-center">
                               <p class="text-normal font-semibold">
@@ -218,7 +216,7 @@ const printDiv = () => {
                             </div>
                           </div>
                         </div>
-                        <div class="row grid grid-cols-2 grid-flow-col">
+                        <!-- <div class="row grid grid-cols-2 grid-flow-col"> -->
                           <!-- <div class="col-60 col-span-2 w-50">
                       <div class="text p-index-left">
                         <p class="font-semibold mb-0">Facture de</p>
@@ -264,13 +262,14 @@ const printDiv = () => {
                         </p>
                       </div>
                     </div> -->
-                        </div>
-                        <div class="mt-14">
+                        <!-- </div> -->
+                        <div class="mt-4">
                           <div class="col-100">
-                            <div class="overflow-x-auto relative rounded-lg">
+                            Les surveillants : 
+                            <div class="overflow-x-auto relative rounded-lg mt-7">
                               <table class="lines">
                                 <thead
-                                  class="table-header-group"
+                                  class="table-header-group bg-sky-500"
                                   style="
                                     background-color: rgb(
                                       85,
@@ -299,16 +298,16 @@ const printDiv = () => {
                               >
                                 Telephone
                               </th> -->
-                                    <!-- <th
+                                    <th
                                 class="pr-5 total text font-semibold text-white text-alignment-right text-right border-radius-last"
                               >
-                                Montant
-                              </th> -->
+                                Signateur
+                              </th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                   <tr
-                                    v-for="product in item.surveillants"
+                                    v-for="surveillant in item.etudiants"
                                     class="border-b-0"
                                     style="display: revert"
                                   >
@@ -316,30 +315,30 @@ const printDiv = () => {
                                       style="display: revert"
                                       class="item text text-alignment-left text-left border-b-0"
                                     >
-                                      {{ product.name }}
+                                      {{ surveillant.nom }}
                                       <!-- <br />
                                 <span class="text-xs">
-                                  {{ product.description }}
+                                  {{ surveillant.description }}
                                 </span> -->
                                     </td>
                                     <td
                                       style="display: revert"
                                       class="quantity text text-alignment-right text-right border-b-0"
                                     >
-                                      {{ product.lastname }}
+                                      {{ surveillant.prenom }}
                                     </td>
                                     <!-- <td
                                 style="display: revert"
                                 class="price text text-alignment-right text-right border-b-0"
                               >
-                                {{ product.telephone }}
+                                {{ surveillant.telephone }}
                               </td> -->
-                                    <!-- <td
+                                    <td
                                 style="display: revert"
                                 class="total text text-alignment-right text-right border-b-0"
                               >
-                                {{ product.amount }}DH
-                              </td> -->
+                                ......................................
+                              </td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -393,7 +392,7 @@ const printDiv = () => {
               >
                 Pas encore de pv...
               </span>
-              <div class="p-3 lg:px-6 border-t dark:border-gray-800">
+              <!-- <div class="p-3 lg:px-6 border-t dark:border-gray-800"> -->
                 <!-- <level>
                   <jb-buttons>
                     <jb-button
@@ -411,7 +410,7 @@ const printDiv = () => {
                     {{ numPages }} enregistrements.</small
                   >
                 </level> -->
-              </div>
+              <!-- </div> -->
             </div>
           </div>
         </div>
@@ -419,7 +418,7 @@ const printDiv = () => {
     </SectionMain>
   </LayoutAuthenticated>
 </template>
-<style scoped>
+<!-- <style scoped>
 td,
 th {
   padding-right: 0;
@@ -430,4 +429,4 @@ th {
 .mytd {
   display: table-column;
 }
-</style>
+</style> -->
