@@ -194,7 +194,7 @@ const printDiv = () => {
                           <div class="col-42 row-span-2 text-right mt-1">
                             <div class="text-dark">
                               <h3>Fiche D'absense</h3>
-                              <span class="text-sm">A.U</span>
+                              <span class="text-sm">A.U : {{ new Date().getFullYear()}}-{{ new Date().getFullYear()+1}}</span>
                             </div>
                           </div>
                            
@@ -209,8 +209,8 @@ const printDiv = () => {
                                 Filiere : {{ item.filier }}
                               </p>
                               <p>Semester : {{ item.semester }}</p>
-                              <p>Heure : {{ item.localDateTime }}h</p>
-                              <p>Salle : {{ item.local }}h</p>
+                              <p>Heure : {{ item.localDateTime }}</p>
+                              <p>Salle : {{ item.local }}</p>
 
                               <p class="text-sm">Module : {{ item.module }}</p>
                             </div>
@@ -267,7 +267,89 @@ const printDiv = () => {
                           <div class="col-100">
                             Les surveillants : 
                             <div class="overflow-x-auto relative rounded-lg mt-7">
-                              <table class="lines">
+                              <table class="lines border">
+                                <thead
+                                  class="table-header-group bg-sky-500"
+                                  style="
+                                    background-color: rgb(
+                                      85,
+                                      88,
+                                      139
+                                    ) !important;
+                                    -webkit-print-color-adjust: exact;
+                                  "
+                                >
+                                  <tr
+                                    class="border-b-0"
+                                    style="display: revert"
+                                  >
+                                    <th
+                                      class="py-2 md:py-1 pl-5 item text font-semibold text-alignment-left text-left text-white border-radius-first"
+                                    >
+                                      Nom
+                                    </th>
+                                    <th
+                                      class="quantity text font-semibold text-alignment-right text-right text-white"
+                                    >
+                                      Prenom
+                                    </th>
+                                    <!-- <th
+                                class="price text font-semibold text-alignment-right text-right text-white"
+                              >
+                                Telephone
+                              </th> -->
+                                    <th
+                                class="pr-5 total text font-semibold text-white text-alignment-right text-right border-radius-last"
+                              >
+                                Signateur
+                              </th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr
+                                    v-for="surveillant in item.surveillants"
+                                    class="border-b"
+                                    style="display: revert"
+                                  >
+                                    <td
+                                      style="display: revert"
+                                      class="item text text-alignment-left text-left border-b-0"
+                                    >
+                                      {{ surveillant.name }}
+                                      <!-- <br />
+                                <span class="text-xs">
+                                  {{ surveillant.description }}
+                                </span> -->
+                                    </td>
+                                    <td
+                                      style="display: revert"
+                                      class="quantity text text-alignment-right text-right border-b-0"
+                                    >
+                                      {{ surveillant.lastname }}
+                                    </td>
+                                    <!-- <td
+                                style="display: revert"
+                                class="price text text-alignment-right text-right border-b-0"
+                              >
+                                {{ surveillant.telephone }}
+                              </td> -->
+                                    <td
+                                style="display: revert"
+                                class="total text text-alignment-right text-right border-b-0"
+                              >
+                                ......................................
+                              </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mt-4">
+                          <div class="col-100">
+                            Les etudiants : 
+                            <div class="overflow-x-auto relative rounded-lg mt-7">
+                              <table class="lines border">
                                 <thead
                                   class="table-header-group bg-sky-500"
                                   style="
@@ -308,7 +390,7 @@ const printDiv = () => {
                                 <tbody>
                                   <tr
                                     v-for="surveillant in item.etudiants"
-                                    class="border-b-0"
+                                    class="border-b"
                                     style="display: revert"
                                   >
                                     <td

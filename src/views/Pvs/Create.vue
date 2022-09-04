@@ -37,7 +37,7 @@ DepartementDataService.retrieveAllData("filiere")
 
 DepartementDataService.retrieveAllData("ExamenTime")
   .then((response) => {
-    form.examenTime = response.data;
+    form.time = response.data;
   })
   .catch((e) => {
     alert(e);
@@ -206,13 +206,13 @@ const submit = async () => {
                         </div>
                       </div>
                       <div class="sm:col-span-3 grid gap-x-8 gap-y-6 grid-rows-2">
-                        <div class="relative sm:col-span-3">
+                        <div class="relative sm:col-span-3" >
                           <select-input
-                            @change="sendSem($event)"
-                            label="Time"
+                            @change="sendExmTim($event)"
+                            label="Temps"
                           >
                             <option
-                              v-for="time in form.examenTime"
+                              v-for="time in form.time"
                               :value="time.time"
                             >
                               {{ time.time }}
