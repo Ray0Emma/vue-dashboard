@@ -45,8 +45,8 @@ DepartementDataService.createPv(
     alert(e);
   });
 
-const printDiv = () => {
-  let contents = document.getElementById("print-template").innerHTML;
+const printDiv = (elemId) => {
+  let contents = document.getElementById(elemId).innerHTML;
   let frame1 = document.createElement("iframe");
   frame1.name = "frame1";
   frame1.style.position = "absolute";
@@ -173,14 +173,14 @@ const printDiv = () => {
                       class="mytd w-6/12 sm:w-2/12 pl-6 py-3 text-right text-sm font-medium text-black dark:text-gray-300 tracking-wider"
                     >
                       <button
-                        @click="printDiv"
+                        @click="printDiv(item.filier + item.localDateTime)"
                         class="px-3 py-1.5 mb-3 sm:mb-0 rounded-xl text-sm font-medium leading-6 bg-violet-500 hover:bg-violet-700 text-white disabled:bg-green-100"
                       >
                         Imprimer Pv
                       </button>
                     </td>
                     <td v-show="0">
-                      <div id="print-template">
+                      <div :id="item.filier + item.localDateTime">
                         <div
                           class="row grid grid-rows-2 grid-flow-col gap-1 pb-5 mb-5"
                         >
