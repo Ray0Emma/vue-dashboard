@@ -30,13 +30,7 @@ const form = reactive({
   module_id: "",
 });
 
-DepartementDataService.createPv(
-  "pv",
-  route.params.filiere,
-  route.params.semester,
-  route.params.module,
-  route.params.time
-)
+DepartementDataService.retrieveAllData("pv/all")
   .then((response) => {
     console.log(response.data.length);
     form.itemsPaginated = response.data;
@@ -90,10 +84,10 @@ const printDiv = () => {
         </div>
 
         <!-- <div class="flex shrink-0 grow-0 items-center justify-center">
-          <a href="item/create"
-            class="px-3 py-1.5 mb-3 sm:mb-0 rounded-xl text-sm font-medium leading-6 bg-violet-500 hover:bg-violet-700 text-white disabled:bg-green-100">
-            Nouveau Facture</a>
-        </div> -->
+              <a href="item/create"
+                class="px-3 py-1.5 mb-3 sm:mb-0 rounded-xl text-sm font-medium leading-6 bg-violet-500 hover:bg-violet-700 text-white disabled:bg-green-100">
+                Nouveau Facture</a>
+            </div> -->
       </div>
       <div class="flex flex-col lg:flex-row mt-14 w-full">
         <div class="relative lg:w-full">
@@ -220,53 +214,6 @@ const printDiv = () => {
                             </div>
                           </div>
                         </div>
-                        <!-- <div class="row grid grid-cols-2 grid-flow-col"> -->
-                        <!-- <div class="col-60 col-span-2 w-50">
-                      <div class="text p-index-left">
-                        <p class="font-semibold mb-0">Facture de</p>
-                        <p>{{ props.invoice.client.name }}</p>
-                        <p>{{ props.invoice.client.email }}</p>
-                        <p>
-                          <br />
-                          {{ props.invoice.client.city }},{{
-                            props.invoice.client.country
-                          }}
-                        </p>
-                        <p class="text-sm">
-                          <br />
-                          {{ props.invoice.client.phone }}
-                        </p>
-                      </div>
-                    </div> -->
-                        <!-- <div class="col-40 col-span-1 w-60 pb-4">
-                      <div class="text p-index-right">
-                        <p class="mb-3">
-                          <span class="font-semibold inline-block w-20">
-                            Numéro de facture:
-                          </span>
-                          <span class="float-right inline-block">
-                            {{ props.invoice.invoice_number }}
-                          </span>
-                        </p>
-                        <p class="mb-3">
-                          <span class="font-semibold inline-block w-20">
-                            Date de facturation:
-                          </span>
-                          <span class="float-right">
-                            {{ props.invoice.invoice_Date }}
-                          </span>
-                        </p>
-                        <p class="mb-0">
-                          <span class="font-semibold inline-block w-20">
-                            Date d'échéance:
-                          </span>
-                          <span class="float-right">
-                            {{ props.invoice.due_date }}
-                          </span>
-                        </p>
-                      </div>
-                    </div> -->
-                        <!-- </div> -->
                         <div class="mt-4">
                           <div class="col-100">
                             Les surveillants :
@@ -300,10 +247,10 @@ const printDiv = () => {
                                       Prenom
                                     </th>
                                     <!-- <th
-                                class="price text font-semibold text-alignment-right text-right text-white"
-                              >
-                                Telephone
-                              </th> -->
+                                    class="price text font-semibold text-alignment-right text-right text-white"
+                                  >
+                                    Telephone
+                                  </th> -->
                                     <th
                                       class="pr-5 total text font-semibold text-white text-alignment-right text-right border-radius-last"
                                     >
@@ -323,9 +270,9 @@ const printDiv = () => {
                                     >
                                       {{ surveillant.name }}
                                       <!-- <br />
-                                <span class="text-xs">
-                                  {{ surveillant.description }}
-                                </span> -->
+                                    <span class="text-xs">
+                                      {{ surveillant.description }}
+                                    </span> -->
                                     </td>
                                     <td
                                       style="display: revert"
@@ -334,11 +281,11 @@ const printDiv = () => {
                                       {{ surveillant.lastname }}
                                     </td>
                                     <!-- <td
-                                style="display: revert"
-                                class="price text text-alignment-right text-right border-b-0"
-                              >
-                                {{ surveillant.telephone }}
-                              </td> -->
+                                    style="display: revert"
+                                    class="price text text-alignment-right text-right border-b-0"
+                                  >
+                                    {{ surveillant.telephone }}
+                                  </td> -->
                                     <td
                                       style="display: revert"
                                       class="total text text-alignment-right text-right border-b-0"
@@ -346,11 +293,14 @@ const printDiv = () => {
                                       ......................................
                                     </td>
                                   </tr>
-                                  <tr v-if="item.surveillants.length == ''">
-                                    Pas encore de surveillants...
-                                  </tr>
                                 </tbody>
                               </table>
+                              <span
+                                v-show="item.surveillants.length == 0"
+                                class="grid place-items-center text-gray-300 p-8"
+                              >
+                                Pas encore de surveillants...
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -430,11 +380,14 @@ const printDiv = () => {
                                       {{ surveillant.cne }}
                                     </td>
                                   </tr>
-                                  <tr v-if="item.etudiants.length == ''">
-                                    Pas encore de etudiants...
-                                  </tr>
                                 </tbody>
                               </table>
+                              <span
+                                v-show="item.etudiants.length == 0"
+                                class="grid place-items-center text-gray-300 p-8"
+                              >
+                                Pas encore de etudiants...
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -451,22 +404,22 @@ const printDiv = () => {
               </span>
               <!-- <div class="p-3 lg:px-6 border-t dark:border-gray-800"> -->
               <!-- <level>
-                  <jb-buttons>
-                    <jb-button
-                      v-for="page in pagesList"
-                      :key="page"
-                      :active="page === currentPage"
-                      :label="page + 1"
-                      :outline="darkMode"
-                      small
-                      @click="currentPage = page"
-                    />
-                  </jb-buttons>
-                  <small
-                    >Page {{ currentPageHuman }} sur
-                    {{ numPages }} enregistrements.</small
-                  >
-                </level> -->
+                      <jb-buttons>
+                        <jb-button
+                          v-for="page in pagesList"
+                          :key="page"
+                          :active="page === currentPage"
+                          :label="page + 1"
+                          :outline="darkMode"
+                          small
+                          @click="currentPage = page"
+                        />
+                      </jb-buttons>
+                      <small
+                        >Page {{ currentPageHuman }} sur
+                        {{ numPages }} enregistrements.</small
+                      >
+                    </level> -->
               <!-- </div> -->
             </div>
           </div>
@@ -475,3 +428,15 @@ const printDiv = () => {
     </SectionMain>
   </LayoutAuthenticated>
 </template>
+<!-- <style scoped>
+    td,
+    th {
+      padding-right: 0;
+      border-bottom-width: 0;
+      padding-left: 0;
+    }
+    
+    .mytd {
+      display: table-column;
+    }
+    </style> -->

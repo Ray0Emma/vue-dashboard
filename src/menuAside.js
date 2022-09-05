@@ -74,10 +74,24 @@ export default [
     ],
   },
   {
-    to: "/pv/add",
-    label: "PV..",
+    label: "Les Pvs",
     icon: mdiReceiptTextCheck,
+    menu: [
+      {
+        to: "/pv/index",
+        label: "All Pvs",
+      },
+      {
+        to: "/pv/add",
+        label: "New Pv",
+      }
+    ],
   },
+  // {
+  //   to: "/pv/add",
+  //   label: "PV..",
+  //   icon: mdiReceiptTextCheck,
+  // },
   {
     to: "/profile",
     label: "Profil",

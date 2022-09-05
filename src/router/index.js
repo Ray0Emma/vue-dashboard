@@ -86,6 +86,11 @@ const routes = [
     component: () => import("@/views/Pvs/Show.vue"),
   },
   {
+    path: "/pv/index",
+    name: "index-pv",
+    component: () => import("@/views/Pvs/Index.vue"),
+  },
+  {
     meta: {
       title: "Profile",
     },
