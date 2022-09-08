@@ -28,6 +28,9 @@ const form = reactive({
   time: "",
   module: "",
   module_id: "",
+  pv_id: "",
+  etud_id: "",
+  test: {},
 });
 
 DepartementDataService.createPv(
@@ -37,9 +40,24 @@ DepartementDataService.createPv(
   route.params.module,
   route.params.time
 )
-  .then((response) => {
-    console.log(response.data.length);
-    form.itemsPaginated = response.data;
+  .then(async (resp) => {
+    await resp.data.forEach((element) => {
+      form.pv_id = element.id;
+      console.log(form.pv_id);
+
+      element.etudiants.forEach((element) => {
+        DepartementDataService.orderPv("orderPv", element.id, form.pv_id).then(
+          (response) => {
+            console.log("etud " + element.id);
+            console.log("ord " + response.data.etudientOrder);
+
+            form.test[element.id] = response.data.etudientOrder;
+            resp.data.etudiants = form.test;
+          }
+        );
+      });
+    });
+    form.itemsPaginated = resp.data;
   })
   .catch((e) => {
     alert(e);
@@ -173,14 +191,18 @@ const printDiv = (elemId) => {
                       class="mytd w-6/12 sm:w-2/12 pl-6 py-3 text-right text-sm font-medium text-black dark:text-gray-300 tracking-wider"
                     >
                       <button
-                        @click="printDiv(item.filier + item.localDateTime)"
+                        @click="
+                          printDiv(
+                            item.filier + item.localDateTime + item.local
+                          )
+                        "
                         class="px-3 py-1.5 mb-3 sm:mb-0 rounded-xl text-sm font-medium leading-6 bg-violet-500 hover:bg-violet-700 text-white disabled:bg-green-100"
                       >
                         Imprimer Pv
                       </button>
                     </td>
                     <td v-show="0">
-                      <div :id="item.filier + item.localDateTime">
+                      <div :id="item.filier + item.localDateTime + item.local">
                         <div
                           class="row grid grid-rows-2 grid-flow-col gap-1 pb-5 mb-5"
                         >
@@ -220,53 +242,7 @@ const printDiv = (elemId) => {
                             </div>
                           </div>
                         </div>
-                        <!-- <div class="row grid grid-cols-2 grid-flow-col"> -->
-                        <!-- <div class="col-60 col-span-2 w-50">
-                      <div class="text p-index-left">
-                        <p class="font-semibold mb-0">Facture de</p>
-                        <p>{{ props.invoice.client.name }}</p>
-                        <p>{{ props.invoice.client.email }}</p>
-                        <p>
-                          <br />
-                          {{ props.invoice.client.city }},{{
-                            props.invoice.client.country
-                          }}
-                        </p>
-                        <p class="text-sm">
-                          <br />
-                          {{ props.invoice.client.phone }}
-                        </p>
-                      </div>
-                    </div> -->
-                        <!-- <div class="col-40 col-span-1 w-60 pb-4">
-                      <div class="text p-index-right">
-                        <p class="mb-3">
-                          <span class="font-semibold inline-block w-20">
-                            Numéro de facture:
-                          </span>
-                          <span class="float-right inline-block">
-                            {{ props.invoice.invoice_number }}
-                          </span>
-                        </p>
-                        <p class="mb-3">
-                          <span class="font-semibold inline-block w-20">
-                            Date de facturation:
-                          </span>
-                          <span class="float-right">
-                            {{ props.invoice.invoice_Date }}
-                          </span>
-                        </p>
-                        <p class="mb-0">
-                          <span class="font-semibold inline-block w-20">
-                            Date d'échéance:
-                          </span>
-                          <span class="float-right">
-                            {{ props.invoice.due_date }}
-                          </span>
-                        </p>
-                      </div>
-                    </div> -->
-                        <!-- </div> -->
+
                         <div class="mt-4">
                           <div class="col-100">
                             Les surveillants :
@@ -299,15 +275,11 @@ const printDiv = (elemId) => {
                                     >
                                       Prenom
                                     </th>
-                                    <!-- <th
-                                class="price text font-semibold text-alignment-right text-right text-white"
-                              >
-                                Telephone
-                              </th> -->
+
                                     <th
                                       class="pr-5 total text font-semibold text-white text-alignment-right text-right border-radius-last"
                                     >
-                                      Signateur
+                                      Signatur
                                     </th>
                                   </tr>
                                 </thead>
@@ -322,10 +294,6 @@ const printDiv = (elemId) => {
                                       class="item text text-alignment-left text-left border-b-0"
                                     >
                                       {{ surveillant.name }}
-                                      <!-- <br />
-                                <span class="text-xs">
-                                  {{ surveillant.description }}
-                                </span> -->
                                     </td>
                                     <td
                                       style="display: revert"
@@ -333,12 +301,7 @@ const printDiv = (elemId) => {
                                     >
                                       {{ surveillant.lastname }}
                                     </td>
-                                    <!-- <td
-                                style="display: revert"
-                                class="price text text-alignment-right text-right border-b-0"
-                              >
-                                {{ surveillant.telephone }}
-                              </td> -->
+
                                     <td
                                       style="display: revert"
                                       class="total text text-alignment-right text-right border-b-0"
@@ -379,6 +342,11 @@ const printDiv = (elemId) => {
                                     <th
                                       class="py-2 md:py-1 pl-5 item text font-semibold text-alignment-left text-left text-white border-radius-first"
                                     >
+                                      #Numero D'order
+                                    </th>
+                                    <th
+                                      class="py-2 md:py-1 pl-5 item text font-semibold text-alignment-left text-left text-white border-radius-first"
+                                    >
                                       Nom et Prenom
                                     </th>
                                     <th
@@ -404,6 +372,13 @@ const printDiv = (elemId) => {
                                     class="border-b"
                                     style="display: revert"
                                   >
+                                    <td>
+                                      {{
+                                        form.itemsPaginated["etudiants"][
+                                          surveillant.id.toString()
+                                        ]
+                                      }}
+                                    </td>
                                     <td
                                       style="display: revert"
                                       class="item text text-alignment-left text-left border-b-0"

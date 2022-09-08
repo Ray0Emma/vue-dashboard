@@ -15,25 +15,35 @@ import SelectInput from "@/components/SelectInput.vue";
 import router from "@/router";
 import { useRoute } from "vue-router";
 
-// const props = defineProps({
-//   itemsPaginated:Array
-// })
 const route = useRoute();
 const form = reactive({
   itemsPaginated: [],
-  filiere: "",
-  filiere_id: "",
-  semester: "",
-  semester_id: "",
-  time: "",
-  module: "",
-  module_id: "",
+  pv_id: "",
+  etud_id: "",
+  test: {},
 });
 
 DepartementDataService.retrieveAllData("pv/all")
-  .then((response) => {
-    console.log(response.data.length);
-    form.itemsPaginated = response.data;
+  .then(async (resp) => {
+    await resp.data.forEach((element) => {
+      form.pv_id = element.id;
+      console.log(form.pv_id);
+
+      element.etudiants.forEach((element) => {
+        DepartementDataService.orderPv("orderPv", element.id, form.pv_id).then(
+          (response) => {
+            console.log("etud " + element.id);
+            console.log("ord " + response.data.etudientOrder);
+
+            form.test[element.id] = response.data.etudientOrder;
+            resp.data.etudiants = form.test;
+          }
+        );
+      });
+    });
+    form.itemsPaginated = resp.data;
+
+    console.log(form.itemsPaginated);
   })
   .catch((e) => {
     alert(e);
@@ -89,7 +99,7 @@ const printDiv = (elemId) => {
             to="/pv/add"
             class="px-3 py-1.5 mb-3 sm:mb-0 rounded-xl text-sm font-medium leading-6 bg-gray-300 hover:bg-gray-400 text-white disabled:bg-green-100"
           >
-            Nouvau pv</router-link
+            Nouveau pv</router-link
           >
           <a
             @click=""
@@ -177,14 +187,18 @@ const printDiv = (elemId) => {
                       class="mytd w-6/12 sm:w-2/12 pl-6 py-3 text-right text-sm font-medium text-black dark:text-gray-300 tracking-wider"
                     >
                       <button
-                        @click="printDiv(item.filier + item.localDateTime)"
+                        @click="
+                          printDiv(
+                            item.filier + item.localDateTime + item.local
+                          )
+                        "
                         class="px-3 py-1.5 mb-3 sm:mb-0 rounded-xl text-sm font-medium leading-6 bg-violet-500 hover:bg-violet-700 text-white disabled:bg-green-100"
                       >
                         Imprimer Pv
                       </button>
                     </td>
                     <td v-show="0">
-                      <div :id="item.filier + item.localDateTime">
+                      <div :id="item.filier + item.localDateTime + item.local">
                         <div
                           class="row grid grid-rows-2 grid-flow-col gap-1 pb-5 mb-5"
                         >
@@ -256,15 +270,11 @@ const printDiv = (elemId) => {
                                     >
                                       Prenom
                                     </th>
-                                    <!-- <th
-                                    class="price text font-semibold text-alignment-right text-right text-white"
-                                  >
-                                    Telephone
-                                  </th> -->
+
                                     <th
                                       class="pr-5 total text font-semibold text-white text-alignment-right text-right border-radius-last"
                                     >
-                                      Signateur
+                                      Signatur
                                     </th>
                                   </tr>
                                 </thead>
@@ -279,10 +289,6 @@ const printDiv = (elemId) => {
                                       class="item text text-alignment-left text-left border-b-0"
                                     >
                                       {{ surveillant.name }}
-                                      <!-- <br />
-                                    <span class="text-xs">
-                                      {{ surveillant.description }}
-                                    </span> -->
                                     </td>
                                     <td
                                       style="display: revert"
@@ -290,12 +296,7 @@ const printDiv = (elemId) => {
                                     >
                                       {{ surveillant.lastname }}
                                     </td>
-                                    <!-- <td
-                                    style="display: revert"
-                                    class="price text text-alignment-right text-right border-b-0"
-                                  >
-                                    {{ surveillant.telephone }}
-                                  </td> -->
+
                                     <td
                                       style="display: revert"
                                       class="total text text-alignment-right text-right border-b-0"
@@ -339,6 +340,11 @@ const printDiv = (elemId) => {
                                     <th
                                       class="py-2 md:py-1 pl-5 item text font-semibold text-alignment-left text-left text-white border-radius-first"
                                     >
+                                      #Numero D'order
+                                    </th>
+                                    <th
+                                      class="py-2 md:py-1 pl-5 item text font-semibold text-alignment-left text-left text-white border-radius-first"
+                                    >
                                       Nom et Prenom
                                     </th>
                                     <th
@@ -364,6 +370,16 @@ const printDiv = (elemId) => {
                                     class="border-b"
                                     style="display: revert"
                                   >
+                                    <td
+                                      style="display: revert"
+                                      class="item text text-alignment-left text-left border-b-0"
+                                    >
+                                      {{
+                                        form.itemsPaginated["etudiants"][
+                                          surveillant.id.toString()
+                                        ]
+                                      }}
+                                    </td>
                                     <td
                                       style="display: revert"
                                       class="item text text-alignment-left text-left border-b-0"
@@ -412,25 +428,6 @@ const printDiv = (elemId) => {
               >
                 Pas encore de pv...
               </span>
-              <!-- <div class="p-3 lg:px-6 border-t dark:border-gray-800"> -->
-              <!-- <level>
-                      <jb-buttons>
-                        <jb-button
-                          v-for="page in pagesList"
-                          :key="page"
-                          :active="page === currentPage"
-                          :label="page + 1"
-                          :outline="darkMode"
-                          small
-                          @click="currentPage = page"
-                        />
-                      </jb-buttons>
-                      <small
-                        >Page {{ currentPageHuman }} sur
-                        {{ numPages }} enregistrements.</small
-                      >
-                    </level> -->
-              <!-- </div> -->
             </div>
           </div>
         </div>
@@ -438,15 +435,3 @@ const printDiv = (elemId) => {
     </SectionMain>
   </LayoutAuthenticated>
 </template>
-<!-- <style scoped>
-    td,
-    th {
-      padding-right: 0;
-      border-bottom-width: 0;
-      padding-left: 0;
-    }
-    
-    .mytd {
-      display: table-column;
-    }
-    </style> -->
