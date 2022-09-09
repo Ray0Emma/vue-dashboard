@@ -56,7 +56,7 @@ export default [
   //   icon: mdiAlertCircle,
   // },
   {
-    label: "Data",
+    label: "Les données",
     icon: mdiViewList,
     menu: [
       {
@@ -79,11 +79,11 @@ export default [
     menu: [
       {
         to: "/pv/index",
-        label: "All Pvs",
+        label: "Les Pvs",
       },
       {
         to: "/pv/add",
-        label: "New Pv",
+        label: "Nouveau Pv",
       }
     ],
   },
