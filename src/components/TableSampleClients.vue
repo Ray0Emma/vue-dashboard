@@ -17,12 +17,14 @@ const props = defineProps({
   instructor: String,
 });
 
+const boxArray = ref(null);
+boxArray.value = props.dataTable;
 const styleStore = useStyleStore();
 
 const mainStore = useMainStore();
 console.log(props.dataTable);
 const items = computed(() =>
-  props.dataTable ? props.dataTable : mainStore.clients
+  boxArray.value ? boxArray.value : mainStore.clients
 );
 
 const myId = ref(null);
@@ -66,7 +68,7 @@ const remove = (inst, id) => {
   DepartementDataService.deleteData(inst, id).then(() => {
     DepartementDataService.retrieveAllData(inst).then((r) => {
       if (r.data) {
-        items.value = r.data;
+        boxArray.value = r.data;
       }
     });
     router.push("/" + props.instructor);
@@ -79,11 +81,6 @@ const goUpdate = (id) => {
 </script>
 
 <template>
-  <!-- <CardBoxModal v-model="isModalActive" title="Sample modal">
-    <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
-    <p>This is sample modal</p>
-  </CardBoxModal> -->
-
   <CardBoxModal
     v-model="isModalDangerActive"
     large-title="Veuillez confirmer"
