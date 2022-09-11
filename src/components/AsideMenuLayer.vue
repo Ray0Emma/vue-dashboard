@@ -21,7 +21,7 @@ const layoutStore = useLayoutStore();
 const styleStore = useStyleStore();
 
 const logoutItem = computed(() => ({
-  label: "Logout",
+  label: "Se déconnecter",
   icon: mdiLogout,
   color: "info",
   isLogout: true,

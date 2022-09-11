@@ -38,7 +38,7 @@ export default [
     menu: [
       {
         icon: mdiAccount,
-        label: "My Profile",
+        label: "Profil",
         to: "/profile",
       },
       // {
@@ -54,14 +54,14 @@ export default [
       },
       {
         icon: mdiLogout,
-        label: "Log Out",
+        label: "Se déconnecter",
         isLogout: true,
       },
     ],
   },
   {
     icon: mdiThemeLightDark,
-    label: "Light/Dark",
+    label: "Clair/foncé",
     isDesktopNoLabel: true,
     isToggleLightDark: true,
   },
@@ -73,7 +73,7 @@ export default [
   // },
   {
     icon: mdiLogout,
-    label: "Log out",
+    label: "Se déconnecter",
     isDesktopNoLabel: true,
     isLogout: true,
   },

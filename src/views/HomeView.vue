@@ -82,7 +82,7 @@ DepartementDataService.retrieveAllData("professors").then((resp) => {
         <CardBoxWidget
           trend=" "
           trend-type="alert"
-          color="text-red-500"
+          color="text-yellow-500"
           linkTo="/pv/index"
           :icon="mdiReceiptTextCheck"
           :number="pv"

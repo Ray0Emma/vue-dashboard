@@ -31,7 +31,7 @@ const trendStyle = computed(() => {
   if (props.trendType === "stud") {
     return {
       icon: mdiAccountSchool,
-      style: "danger",
+      style: "info",
     };
   }
 
@@ -45,7 +45,7 @@ const trendStyle = computed(() => {
   if (props.trendType === "prof") {
     return {
       icon: mdiHumanMaleBoard,
-      style: "info",
+      style: "danger",
     };
   }
 
