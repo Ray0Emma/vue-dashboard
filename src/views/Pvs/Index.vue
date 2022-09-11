@@ -6,44 +6,43 @@ import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.
 import BaseButton from "@/components/BaseButton.vue";
 import TableSampleClients from "@/components/TableSampleClients.vue";
 import DepartementDataService from "@/services/DepartementDataService";
-import { computed, reactive, ref } from "vue";
+import { computed, isProxy, onMounted, reactive, ref, toRaw } from "vue";
 import CardBox from "@/components/CardBox.vue";
 import FormField from "@/components/FormField.vue";
 import FormControl from "@/components/FormControl.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import SelectInput from "@/components/SelectInput.vue";
-import router from "@/router";
-import { useRoute } from "vue-router";
 
-const route = useRoute();
+const test = reactive({});
 const form = reactive({
-  itemsPaginated: [],
+  itemsPaginated: {},
   pv_id: "",
   etud_id: "",
-  test: {},
 });
 
 DepartementDataService.retrieveAllData("pv/all")
   .then(async (resp) => {
-    await resp.data.forEach((element) => {
+    await resp.data.map((element) => {
       form.pv_id = element.id;
-      console.log(form.pv_id);
+      // console.log(form.pv_id);
 
-      element.etudiants.forEach((element) => {
+      element.etudiants.map((element) => {
         DepartementDataService.orderPv("orderPv", element.id, form.pv_id).then(
           (response) => {
-            console.log("etud " + element.id);
-            console.log("ord " + response.data.etudientOrder);
+            // console.log("etud " + element.id);
+            // console.log("ord " + response.data.etudientOrder);
 
-            form.test[element.id] = response.data.etudientOrder;
-            resp.data.etudiants = form.test;
+            test[element.id] = response.data.etudientOrder;
           }
         );
       });
     });
+    // console.log(test);
     form.itemsPaginated = resp.data;
 
-    console.log(form.itemsPaginated);
+    form.itemsPaginated[form.itemsPaginated.length] = test;
+    // console.log(form.itemsPaginated[form.itemsPaginated.length - 1]);
+    // console.log(toRaw(form.itemsPaginated));
   })
   .catch((e) => {
     alert(e);
@@ -153,6 +152,10 @@ const printDiv = (elemId) => {
                     class="relative flex items-center px-2 group border-b"
                   >
                     <td
+                      v-if="
+                        item !=
+                        form.itemsPaginated[form.itemsPaginated.length - 1]
+                      "
                       class="w-4/12 table-title hidden sm:table-cell pr-6 text-left cursor-pointer py-4 whitespace-nowrap text-sm font-normal text-black dark:text-gray-300 truncate"
                     >
                       <div class="font-bold truncate">
@@ -163,6 +166,10 @@ const printDiv = (elemId) => {
                       </div>
                     </td>
                     <td
+                      v-if="
+                        item !=
+                        form.itemsPaginated[form.itemsPaginated.length - 1]
+                      "
                       class="w-3/12 table-title hidden sm:table-cell pr-6 text-left cursor-pointer py-4 whitespace-nowrap text-sm font-normal text-black dark:text-gray-300 truncate"
                     >
                       <span
@@ -172,6 +179,10 @@ const printDiv = (elemId) => {
                       </span>
                     </td>
                     <td
+                      v-if="
+                        item !=
+                        form.itemsPaginated[form.itemsPaginated.length - 1]
+                      "
                       class="mytd w-6/12 sm:w-3/12 table-title pr-6 text-left cursor-pointer py-4 whitespace-nowrap text-sm font-normal text-black dark:text-gray-300 truncate"
                     >
                       <div class="font-medium truncate">
@@ -184,6 +195,10 @@ const printDiv = (elemId) => {
                       </div>
                     </td>
                     <td
+                      v-if="
+                        item !=
+                        form.itemsPaginated[form.itemsPaginated.length - 1]
+                      "
                       class="mytd w-6/12 sm:w-2/12 pl-6 py-3 text-right text-sm font-medium text-black dark:text-gray-300 tracking-wider"
                     >
                       <button
@@ -197,7 +212,13 @@ const printDiv = (elemId) => {
                         Imprimer Pv
                       </button>
                     </td>
-                    <td v-show="0">
+                    <td
+                      v-show="0"
+                      v-if="
+                        item !=
+                        form.itemsPaginated[form.itemsPaginated.length - 1]
+                      "
+                    >
                       <div :id="item.filier + item.localDateTime + item.local">
                         <div
                           class="row grid grid-rows-2 grid-flow-col gap-1 pb-5 mb-5"
@@ -307,7 +328,7 @@ const printDiv = (elemId) => {
                                 </tbody>
                               </table>
                               <span
-                                v-show="item.surveillants.length == 0"
+                                v-show="item.surveillants.length == 1"
                                 class="grid place-items-center text-gray-300 p-8"
                               >
                                 Pas encore de surveillants...
@@ -338,6 +359,11 @@ const printDiv = (elemId) => {
                                     style="display: revert"
                                   >
                                     <th
+                                      v-if="
+                                        form.itemsPaginated[
+                                          form.itemsPaginated.length - 1
+                                        ]
+                                      "
                                       class="py-2 md:py-1 pl-5 item text font-semibold text-alignment-left text-left text-white border-radius-first"
                                     >
                                       #Numero D'order
@@ -371,13 +397,18 @@ const printDiv = (elemId) => {
                                     style="display: revert"
                                   >
                                     <td
+                                      v-if="
+                                        form.itemsPaginated[
+                                          form.itemsPaginated.length - 1
+                                        ]
+                                      "
                                       style="display: revert"
                                       class="item text text-alignment-left text-left border-b-0"
                                     >
                                       {{
-                                        form.itemsPaginated["etudiants"][
-                                          surveillant.id.toString()
-                                        ]
+                                        form.itemsPaginated[
+                                          form.itemsPaginated.length - 1
+                                        ][surveillant.id.toString()]
                                       }}
                                     </td>
                                     <td
@@ -409,7 +440,7 @@ const printDiv = (elemId) => {
                                 </tbody>
                               </table>
                               <span
-                                v-show="item.etudiants.length == 0"
+                                v-show="item.etudiants.length == 1"
                                 class="grid place-items-center text-gray-300 p-8"
                               >
                                 Pas encore de etudiants...
@@ -423,7 +454,7 @@ const printDiv = (elemId) => {
                 </tbody>
               </table>
               <span
-                v-show="form.itemsPaginated.length == 0"
+                v-show="form.itemsPaginated.length == 1"
                 class="grid place-items-center text-gray-300 p-8"
               >
                 Pas encore de pv...
