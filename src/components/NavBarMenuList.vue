@@ -1,18 +1,23 @@
 <script setup>
-import NavBarItem from '@/components/NavBarItem.vue'
+import NavBarItem from "@/components/NavBarItem.vue";
+import { useAuthStore } from "@/stores/auth.store";
 
 defineProps({
   menu: {
     type: Array,
-    default: () => []
+    default: () => [],
+  },
+});
+
+const emit = defineEmits(["menu-click"]);
+
+const menuClick = async (event, item) => {
+  emit("menu-click", event, item);
+  if (item.label == "Se déconnecter") {
+    const authStore = useAuthStore();
+    await authStore.logout();
   }
-})
-
-const emit = defineEmits(['menu-click'])
-
-const menuClick = (event, item) => {
-  emit('menu-click', event, item)
-}
+};
 </script>
 
 <template>
