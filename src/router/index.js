@@ -1,15 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Style from "@/views/StyleView.vue";
+import Login from "@/views/LoginView.vue";
 import Home from "@/views/HomeView.vue";
 
 const routes = [
   {
     meta: {
-      title: "Select style",
+      title: "Login",
     },
     path: "/",
-    name: "style",
-    component: Style,
+    name: "Login",
+    component: Login,
   },
   {
     // Document title tag
