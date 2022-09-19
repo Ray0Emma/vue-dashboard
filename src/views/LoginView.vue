@@ -39,10 +39,10 @@ const submit = async () => {
   error.value = {};
 
   if (!form.login) {
-    error.value.login = "Login required.";
+    error.value.login = "Le champ nom est obligatoire";
   }
   if (!form.pass) {
-    error.value.pass = "Pass required.";
+    error.value.pass = "Le champ mot de passe est obligatoire";
   }
 };
 </script>
@@ -52,8 +52,8 @@ const submit = async () => {
     <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
       <CardBox :class="cardClass" form @submit.prevent="submit">
         <FormField
-          label="Login"
-          :help="error?.login ? error?.login : 'Please enter your login'"
+          label="Nom"
+          :help="error?.login ? error?.login : 'Veuillez entrer votre Nom'"
         >
           <FormControl
             v-model="form.login"
@@ -64,8 +64,10 @@ const submit = async () => {
         </FormField>
 
         <FormField
-          label="Password"
-          :help="error?.pass ? error?.pass : 'Please enter your password'"
+          label="Mot de passe"
+          :help="
+            error?.pass ? error?.pass : 'Veuillez entrer votre mot de passe'
+          "
         >
           <FormControl
             v-model="form.pass"
@@ -84,7 +86,7 @@ const submit = async () => {
 
         <template #footer>
           <BaseButtons>
-            <BaseButton type="submit" color="info" label="Login" />
+            <BaseButton type="submit" color="info" label="Se connecter" />
             <!-- <BaseButton to="/dashboard" color="info" outline label="Back" /> -->
           </BaseButtons>
         </template>
