@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { mdiAccount, mdiAsterisk } from "@mdi/js";
 import SectionFullScreen from "@/components/SectionFullScreen.vue";
@@ -16,9 +16,10 @@ import { useAuthStore } from "@/stores/auth.store";
 import axios from "axios";
 
 const router = useRouter();
+const error = ref({});
 const form = reactive({
-  login: "admin",
-  pass: "123",
+  login: "",
+  pass: "",
 });
 
 // const loggedIn = computed(() => {
@@ -30,37 +31,19 @@ const form = reactive({
 // }
 
 const submit = async () => {
-  const authStore = useAuthStore();
-  await authStore.login(form.login, form.pass);
+  if (form.login && form.pass) {
+    const authStore = useAuthStore();
+    await authStore.login(form.login, form.pass);
+  }
 
-  // await axios
-  //   .post("http://localhost:8080/login", {
-  //     username: form.login,
-  //     password: form.pass,
-  //   })
-  //   .then((resp) => {
-  //     console.log(resp.data);
-  //   });
-  // loading = true;
+  error.value = {};
 
-  // useStore()
-  //   .$patch("login", user)
-  //   .then(
-  //     () => {
-  //       router.push("/profile");
-  //     },
-  //     (error) => {
-  //       alert(error);
-  //       // this.message =
-  //       //   (error.response &&
-  //       //     error.response.data &&
-  //       //     error.response.data.message) ||
-  //       //   error.message ||
-  //       //   error.toString();
-  //     }
-  //   );
-
-  // router.push("/dashboard");
+  if (!form.login) {
+    error.value.login = "Login required.";
+  }
+  if (!form.pass) {
+    error.value.pass = "Pass required.";
+  }
 };
 </script>
 
@@ -68,7 +51,10 @@ const submit = async () => {
   <LayoutGuest>
     <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
       <CardBox :class="cardClass" form @submit.prevent="submit">
-        <FormField label="Login" help="Please enter your login">
+        <FormField
+          label="Login"
+          :help="error?.login ? error?.login : 'Please enter your login'"
+        >
           <FormControl
             v-model="form.login"
             :icon="mdiAccount"
@@ -77,7 +63,10 @@ const submit = async () => {
           />
         </FormField>
 
-        <FormField label="Password" help="Please enter your password">
+        <FormField
+          label="Password"
+          :help="error?.pass ? error?.pass : 'Please enter your password'"
+        >
           <FormControl
             v-model="form.pass"
             :icon="mdiAsterisk"
