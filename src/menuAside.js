@@ -2,14 +2,7 @@ import {
   mdiAccountCircle,
   mdiMonitor,
   mdiLifebuoy,
-  mdiLock,
-  mdiAlertCircle,
-  mdiSquareEditOutline,
-  mdiTable,
   mdiViewList,
-  mdiTelevisionGuide,
-  mdiResponsive,
-  mdiPalette,
   mdiReceiptTextCheck,
 } from "@mdi/js";
 
