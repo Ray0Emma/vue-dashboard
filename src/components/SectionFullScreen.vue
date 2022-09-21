@@ -10,7 +10,7 @@ import {
 const props = defineProps({
   bg: {
     type: String,
-    required: true,
+    default: "bg-gray-300",
     validator: (value) => ["purplePink", "pinkRed"].includes(value),
   },
 });
@@ -43,7 +43,7 @@ const colorClass = computed(() => {
           style="width: 512px"
         >
           <div style="width: 350px; height: 350px">
-            <img src="public/user-account.png" />
+            <img src="/user-account.png" />
           </div>
           <h1 class="text-2xl text-center text-gray-400 font-bold">
             Faculté Polydisciplinaire - Université Sultan Moulay Slimane

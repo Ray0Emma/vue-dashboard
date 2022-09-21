@@ -95,19 +95,19 @@ class BaseDataService {
   }
 }
 
-axios.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
-    if (error.response.data.error_message.startsWith("The Token has expired")) {
-      setTimeout(useAuthStore().logout(), 4000);
-      console.log("token expired", error.response);
+// axios.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   (error) => {
+//     if (error.response.data.error_message.startsWith("The Token has expired")) {
+//       // useAuthStore().logout(), 4000;
+//       console.log("token expired", error.response);
 
-      /* THIS WORKS BUT BREAKS THE LOGIN ERROR HANDLING */
-    }
-    // return Promise.reject(error);
-  }
-);
+//       /* THIS WORKS BUT BREAKS THE LOGIN ERROR HANDLING */
+//     }
+//     return Promise.reject(error);
+//   }
+// );
 
 export default new BaseDataService();

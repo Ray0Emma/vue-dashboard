@@ -31,8 +31,7 @@ const username = computed(() => props.username);
 <template>
   <div>
     <img
-      :src="avatar"
-      :alt="username"
+      src="/o6VptDpX_400x400.jpg"
       class="rounded-full block h-auto w-full max-w-full bg-gray-100 dark:bg-slate-800"
     />
   </div>

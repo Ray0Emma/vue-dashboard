@@ -3,7 +3,7 @@ import { mdiChevronUp, mdiChevronDown } from "@mdi/js";
 import { RouterLink } from "vue-router";
 import { computed, ref, onMounted, onBeforeUnmount } from "vue";
 import { useStyleStore } from "@/stores/style.js";
-import { useAuthStore } from "@/stores/auth.store";
+// import { useAuthStore } from "@/stores/auth.store";
 import BaseIcon from "@/components/BaseIcon.vue";
 import UserAvatarCurrentUser from "@/components/UserAvatarCurrentUser.vue";
 import NavBarMenuList from "@/components/NavBarMenuList.vue";
@@ -46,9 +46,9 @@ const componentClass = computed(() => {
 
   return base;
 });
-
+const CurrentUser = JSON.parse(localStorage.getItem("user"));
 const itemLabel = computed(() =>
-  props.item.isCurrentUser ? useAuthStore().user.username : props.item.label
+  localStorage.getItem("user") ? CurrentUser.username : props.item.label
 );
 
 const isDropdownActive = ref(false);

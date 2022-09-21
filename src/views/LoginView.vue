@@ -11,7 +11,6 @@ import BaseButton from "@/components/BaseButton.vue";
 import BaseButtons from "@/components/BaseButtons.vue";
 import LayoutGuest from "@/layouts/LayoutGuest.vue";
 import { computed } from "@vue/reactivity";
-// import { useAuth } from "@/stores/auth.module.js";
 import { useAuthStore } from "@/stores/auth.store";
 import axios from "axios";
 
@@ -21,14 +20,6 @@ const form = reactive({
   login: "",
   pass: "",
 });
-
-// const loggedIn = computed(() => {
-//   return useAuth().initialState.status.loggedIn;
-// });
-
-// if (loggedIn.value) {
-//   router.push("/dashboard");
-// }
 
 const submit = async () => {
   if (form.login && form.pass) {
@@ -49,7 +40,7 @@ const submit = async () => {
 
 <template>
   <LayoutGuest>
-    <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
+    <SectionFullScreen v-slot="{ cardClass }">
       <CardBox :class="cardClass" form @submit.prevent="submit">
         <FormField
           label="Nom"
@@ -77,17 +68,9 @@ const submit = async () => {
           />
         </FormField>
 
-        <!-- <FormCheckRadio
-          v-model="form.remember"
-          name="remember"
-          label="Remember"
-          :input-value="true"
-        /> -->
-
         <template #footer>
           <BaseButtons>
             <BaseButton type="submit" color="info" label="Se connecter" />
-            <!-- <BaseButton to="/dashboard" color="info" outline label="Back" /> -->
           </BaseButtons>
         </template>
       </CardBox>
