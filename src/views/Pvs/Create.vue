@@ -24,6 +24,7 @@ const form = reactive({
   semester_name: "",
   time: "",
   time_id: "",
+  date_id: "",
   module: "",
   module_id: "",
 });
@@ -36,13 +37,13 @@ DepartementDataService.retrieveAllData("filiere")
     alert(e);
   });
 
-DepartementDataService.retrieveAllData("ExamenTime")
-  .then((response) => {
-    form.time = response.data;
-  })
-  .catch((e) => {
-    alert(e);
-  });
+// DepartementDataService.retrieveAllData("ExamenTime")
+//   .then((response) => {
+//     form.time = response.data;
+//   })
+//   .catch((e) => {
+//     alert(e);
+//   });
 
 const getsem = () => {
   DepartementDataService.retrieveData("semester/filiere", form.filiere_id)
@@ -75,9 +76,9 @@ const sendSem = (value) => {
 const sendMod = (value) => {
   form.module_id = value.target.value;
 };
-const sendExmTim = (value) => {
-  form.time_id = value.target.value;
-};
+// const sendExmTim = (value) => {
+//   form.time_id = value.target.value;
+// };
 
 const upload = (event) => {
   const value = event.target.files || event.dataTransfer.files;
@@ -118,7 +119,9 @@ const submit = async () => {
         "/" +
         form.module_id +
         "/" +
-        form.time_id
+        `${form.time_id}h-${form.time}h` +
+        "/" +
+        form.date_id
     );
   }
 };
@@ -224,24 +227,20 @@ const submit = async () => {
                         class="sm:col-span-3 grid gap-x-8 gap-y-6 grid-rows-2"
                       >
                         <div class="relative sm:col-span-3">
-                          <select-input
-                            v-model="form.time_id"
-                            @change="sendExmTim($event)"
-                            label="Temps"
-                          >
-                            <option
-                              v-for="time in form.time"
-                              :value="time.time"
-                            >
-                              {{ time.time }}
-                            </option>
-                          </select-input>
-                          <!-- <span v-if="form.errors.time"
-                            ><small class="text-red-300">{{
-                              form.errors.time
-                            }}</small></span
-                          > -->
-                          <!---->
+                          <label
+                            for="date"
+                            class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                            >Date
+                            <!-- <span class="text-red-300 ml-1">*</span> -->
+                          </label>
+                          <input
+                            type="date"
+                            name="date"
+                            v-model="form.date_id"
+                            placeholder="Entrez la date"
+                            id="date"
+                            class="w-full text-sm px-3 py-2.5 mt-1 rounded-lg border text-black dark:text-gray-300 dark:bg-gray-900 bg-white disabled:bg-gray-200 focus:outline-none focus:ring-transparent focus:border-violet-700"
+                          />
                         </div>
                         <select-input
                           @change="sendMod($event)"
@@ -255,6 +254,40 @@ const submit = async () => {
                             {{ modul.name }}
                           </option>
                         </select-input>
+                      </div>
+                      <div class="sm:col-span-6 gap-x-8 grid grid-cols-2">
+                        <div class="relative sm:row-span-3">
+                          <label
+                            for="temps"
+                            class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                            >L'heure du début
+                            <!-- <span class="text-red-300 ml-1">*</span> -->
+                          </label>
+                          <input
+                            type="time"
+                            name="temps"
+                            v-model="form.time_id"
+                            placeholder="Entrez le temps"
+                            id="time"
+                            class="w-full text-sm px-3 py-2.5 mt-1 rounded-lg border text-black dark:text-gray-300 dark:bg-gray-900 bg-white disabled:bg-gray-200 focus:outline-none focus:ring-transparent focus:border-violet-700"
+                          />
+                        </div>
+                        <div class="relative sm:row-span-3">
+                          <label
+                            for="temps"
+                            class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                            >L'heure de la fin
+                            <!-- <span class="text-red-300 ml-1">*</span> -->
+                          </label>
+                          <input
+                            type="time"
+                            name="temps"
+                            v-model="form.time"
+                            placeholder="Entrez le temps"
+                            id="time"
+                            class="w-full text-sm px-3 py-2.5 mt-1 rounded-lg border text-black dark:text-gray-300 dark:bg-gray-900 bg-white disabled:bg-gray-200 focus:outline-none focus:ring-transparent focus:border-violet-700"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>

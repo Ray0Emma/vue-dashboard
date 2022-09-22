@@ -73,7 +73,8 @@ router.beforeEach((to, from, next) => {
 
 router.beforeEach((to, from, next) => {
   isAuthenticated = localStorage.getItem('user');
-  if (to.name === "Login" && isAuthenticated) next({ name: "dashboard" })
+  if (to.name === "Login" && isAuthenticated)
+  setTimeout(()=>next({ name: "dashboard" }),3000);
   else next()
 
 });

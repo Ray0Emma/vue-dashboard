@@ -46,9 +46,10 @@ const componentClass = computed(() => {
 
   return base;
 });
+
 const CurrentUser = JSON.parse(localStorage.getItem("user"));
 const itemLabel = computed(() =>
-  localStorage.getItem("user") ? CurrentUser.username : props.item.label
+  props.item.isCurrentUser ? CurrentUser.username : props.item.label
 );
 
 const isDropdownActive = ref(false);

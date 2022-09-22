@@ -82,7 +82,7 @@ const routes = [
     component: () => import("@/views/Pvs/Create.vue"),
   },
   {
-    path: "/pv/show/:filiere/:semester/:module/:time",
+    path: "/pv/show/:filiere/:semester/:module/:time/:date",
     name: "show-pv",
     component: () => import("@/views/Pvs/Show.vue"),
   },

@@ -49,7 +49,17 @@ DepartementDataService.retrieveAllData("pv/all")
   });
 
 const printDiv = (elemId) => {
-  console.log(elemId);
+  let qrInput = document.getElementById("input_" + elemId).innerHTML;
+
+  let qrImg = document.getElementById("img_" + elemId);
+  console.log(qrImg.src);
+  let preValue;
+  let qrValue = qrInput;
+
+  if (!qrValue || preValue === qrValue) return;
+  preValue = qrValue;
+  qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${qrValue}`;
+  console.log(qrImg.src);
   let contents = document.getElementById(elemId).innerHTML;
   let frame1 = document.createElement("iframe");
   frame1.name = "frame1";
@@ -74,7 +84,7 @@ const printDiv = (elemId) => {
     window.frames["frame1"].focus();
     window.frames["frame1"].print();
     document.body.removeChild(frame1);
-  }, 500);
+  }, 900);
   return false;
 };
 </script>
@@ -204,7 +214,10 @@ const printDiv = (elemId) => {
                       <button
                         @click="
                           printDiv(
-                            item.filier + item.localDateTime + item.local
+                            item.filier +
+                              item.localDateTime +
+                              item.local +
+                              item.localDate
                           )
                         "
                         class="px-3 py-1.5 mb-3 sm:mb-0 rounded-xl text-sm font-medium leading-6 bg-violet-500 hover:bg-violet-700 text-white disabled:bg-green-100"
@@ -219,40 +232,65 @@ const printDiv = (elemId) => {
                         form.itemsPaginated[form.itemsPaginated.length - 1]
                       "
                     >
-                      <div :id="item.filier + item.localDateTime + item.local">
+                      <div
+                        :id="
+                          item.filier +
+                          item.localDateTime +
+                          item.local +
+                          item.localDate
+                        "
+                      >
                         <div
-                          class="row grid grid-rows-2 grid-flow-col gap-1 pb-5 mb-5"
+                          class="flex grid grid-cols-4 grid-flow-col gap-4 pb-10"
                         >
-                          <div class="col-58 row-span-2">
-                            <div class="text">
-                              <img
-                                src="http://www.fpbm.ma/new/img/fplogo_145x154.png"
-                                alt="fpbm logo"
-                                class="relative object-contain max-h-32"
-                              />
-                            </div>
+                          <div class="flex justify-start col-span-1">
+                            Université Sultan Moulay Slimane <br />
+                            Faculté Polydisciplinaire <br />
+                            Beni Mellal
                           </div>
-                          <div class="col-42 row-span-2 text-right mt-1">
-                            <div class="text-dark">
-                              <h3>Fiche D'absense</h3>
-                              <span class="text-sm"
-                                >A.U : {{ new Date().getFullYear() }}-{{
-                                  new Date().getFullYear() + 1
-                                }}</span
-                              >
-                            </div>
+
+                          <div class="flex justify-center col-span-2">
+                            <img
+                              src="http://www.fpbm.ma/new/img/fplogo_145x154.png"
+                              alt="fpbm logo"
+                              class="relative object-contain"
+                            />
+                          </div>
+                          <div class="flex justify-end col-span-1">
+                            <img
+                              :id="
+                                'img_' +
+                                item.filier +
+                                item.localDateTime +
+                                item.local +
+                                item.localDate
+                              "
+                              src=""
+                              class="relative object-contain max-h-32"
+                            />
                           </div>
                         </div>
+
                         <div
                           class="row grid grid-rows-2 grid-flow-col gap-1 pb-5 mb-5"
                         >
-                          <div class="col-42 row-span-2">
+                          <div
+                            class="col-42 row-span-2"
+                            :id="
+                              'input_' +
+                              item.filier +
+                              item.localDateTime +
+                              item.local +
+                              item.localDate
+                            "
+                          >
                             <div class="text-center">
                               <p class="text-normal font-semibold">
                                 Filiere : {{ item.filier }}
                               </p>
                               <p>Semester : {{ item.semester }}</p>
                               <p>Heure : {{ item.localDateTime }}</p>
+                              <p>Date : {{ item.localDate }}</p>
                               <p>Salle : {{ item.local }}</p>
 
                               <p class="text-sm">Module : {{ item.module }}</p>
@@ -267,6 +305,7 @@ const printDiv = (elemId) => {
                             >
                               <table class="lines border">
                                 <thead
+                                  v-if="item.surveillants.length > 0"
                                   class="table-header-group bg-sky-500"
                                   style="
                                     background-color: rgb(
@@ -289,13 +328,13 @@ const printDiv = (elemId) => {
                                     <th
                                       class="quantity text font-semibold text-alignment-right text-right text-white"
                                     >
-                                      Prenom
+                                      Prénom
                                     </th>
 
                                     <th
                                       class="pr-5 total text font-semibold text-white text-alignment-right text-right border-radius-last"
                                     >
-                                      Signatur
+                                      Signature
                                     </th>
                                   </tr>
                                 </thead>
@@ -328,7 +367,7 @@ const printDiv = (elemId) => {
                                 </tbody>
                               </table>
                               <span
-                                v-show="item.surveillants.length == 1"
+                                v-show="item.surveillants.length == 0"
                                 class="grid place-items-center text-gray-300 p-8"
                               >
                                 Pas encore de surveillants...
@@ -344,6 +383,7 @@ const printDiv = (elemId) => {
                             >
                               <table class="lines border">
                                 <thead
+                                  v-if="item.etudiants.length > 0"
                                   class="table-header-group bg-sky-500"
                                   style="
                                     background-color: rgb(
@@ -366,17 +406,17 @@ const printDiv = (elemId) => {
                                       "
                                       class="py-2 md:py-1 pl-5 item text font-semibold text-alignment-left text-left text-white border-radius-first"
                                     >
-                                      #Numero D'order
+                                      Numero D'order
                                     </th>
                                     <th
                                       class="py-2 md:py-1 pl-5 item text font-semibold text-alignment-left text-left text-white border-radius-first"
                                     >
-                                      Nom et Prenom
+                                      Nom et Prénom
                                     </th>
                                     <th
                                       class="quantity text font-semibold text-alignment-left text-left text-white"
                                     >
-                                      Apogee
+                                      Apogée
                                     </th>
                                     <th
                                       class="price text font-semibold text-alignment-right text-right text-white"
@@ -440,7 +480,7 @@ const printDiv = (elemId) => {
                                 </tbody>
                               </table>
                               <span
-                                v-show="item.etudiants.length == 1"
+                                v-show="item.etudiants.length == 0"
                                 class="grid place-items-center text-gray-300 p-8"
                               >
                                 Pas encore de etudiants...

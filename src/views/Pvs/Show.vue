@@ -34,7 +34,8 @@ DepartementDataService.createPv(
   route.params.filiere,
   route.params.semester,
   route.params.module,
-  route.params.time
+  route.params.time,
+  route.params.date
 )
   .then((resp) => {
     resp.data.forEach((element) => {
@@ -122,13 +123,13 @@ const printDiv = (elemId) => {
                     </th>
                     <th
                       scope="col"
-                      class="w-3/12 table-title hidden sm:table-cell pr-6 text-left py-3 text-xs font-medium text-black dark:text-gray-300 tracking-wider"
+                      class="w-4/12 table-title hidden sm:table-cell pr-6 text-left py-3 text-xs font-medium text-black dark:text-gray-300 tracking-wider"
                     >
                       <div class="font-medium truncate">Heure</div>
                     </th>
                     <th
                       scope="col"
-                      class="w-6/12 sm:w-3/12 table-title pr-6 text-left py-3 text-xs font-medium text-black dark:text-gray-300 tracking-wider"
+                      class="w-5/12 sm:w-2/12 table-title pr-6 text-left py-3 text-xs font-medium text-black dark:text-gray-300 tracking-wider"
                     >
                       <div class="font-medium truncate">La Salle</div>
                       <div class="font-normal truncate">Semester</div>
@@ -145,7 +146,7 @@ const printDiv = (elemId) => {
                 <tbody>
                   <tr
                     v-for="item in form.itemsPaginated"
-                    class="relative flex items-center px-2 group border-b"
+                    class="relative flex items-center group border-b"
                   >
                     <td
                       v-if="
@@ -166,13 +167,18 @@ const printDiv = (elemId) => {
                         item !=
                         form.itemsPaginated[form.itemsPaginated.length - 1]
                       "
-                      class="w-3/12 table-title hidden sm:table-cell pr-6 text-left cursor-pointer py-4 whitespace-nowrap text-sm font-normal text-black dark:text-gray-300 truncate"
+                      class="w-3/12 table-title hidden sm:table-cell text-left cursor-pointer py-4 whitespace-nowrap text-sm font-normal text-black dark:text-gray-300 truncate"
                     >
                       <span
-                        class="px-2.5 py-1 ml-2 text-xs font-medium rounded-xl bg-violet-300 dark:bg-violet-500"
+                        class="px-2.5 py-1 text-xs font-medium rounded-xl bg-violet-300 dark:bg-violet-500"
                       >
                         {{ item.localDateTime }}
                       </span>
+                      <!-- <div class="w-20 group font-normal truncate mt-4">
+                        <span class="border-black border-b border-dashed">
+                          {{ item.localDate }}
+                        </span>
+                      </div> -->
                     </td>
                     <td
                       v-if="
@@ -200,7 +206,10 @@ const printDiv = (elemId) => {
                       <button
                         @click="
                           printDiv(
-                            item.filier + item.localDateTime + item.local
+                            item.filier +
+                              item.localDateTime +
+                              item.local +
+                              item.localDate
                           )
                         "
                         class="px-3 py-1.5 mb-3 sm:mb-0 rounded-xl text-sm font-medium leading-6 bg-violet-500 hover:bg-violet-700 text-white disabled:bg-green-100"
@@ -215,7 +224,14 @@ const printDiv = (elemId) => {
                         form.itemsPaginated[form.itemsPaginated.length - 1]
                       "
                     >
-                      <div :id="item.filier + item.localDateTime + item.local">
+                      <div
+                        :id="
+                          item.filier +
+                          item.localDateTime +
+                          item.local +
+                          item.localDate
+                        "
+                      >
                         <div
                           class="row grid grid-rows-2 grid-flow-col gap-1 pb-5 mb-5"
                         >
@@ -249,6 +265,7 @@ const printDiv = (elemId) => {
                               </p>
                               <p>Semester : {{ item.semester }}</p>
                               <p>Heure : {{ item.localDateTime }}</p>
+                              <p>Date : {{ item.localDate }}</p>
                               <p>Salle : {{ item.local }}</p>
 
                               <p class="text-sm">Module : {{ item.module }}</p>
@@ -258,12 +275,13 @@ const printDiv = (elemId) => {
 
                         <div class="mt-4">
                           <div class="col-100">
-                            Les surveillants :
+                            <span>Les surveillants :</span>
                             <div
                               class="overflow-x-auto relative rounded-lg mt-7"
                             >
                               <table class="lines border">
                                 <thead
+                                  v-if="item.surveillants.length > 0"
                                   class="table-header-group bg-sky-500"
                                   style="
                                     background-color: rgb(
@@ -286,13 +304,13 @@ const printDiv = (elemId) => {
                                     <th
                                       class="quantity text font-semibold text-alignment-right text-right text-white"
                                     >
-                                      Prenom
+                                      Prénom
                                     </th>
 
                                     <th
                                       class="pr-5 total text font-semibold text-white text-alignment-right text-right border-radius-last"
                                     >
-                                      Signatur
+                                      Signature
                                     </th>
                                   </tr>
                                 </thead>
@@ -322,7 +340,7 @@ const printDiv = (elemId) => {
                                       ......................................
                                     </td>
                                   </tr>
-                                  <tr v-if="item.surveillants.length == 1">
+                                  <tr v-if="item.surveillants.length == 0">
                                     Pas encore de surveillants...
                                   </tr>
                                 </tbody>
@@ -338,6 +356,7 @@ const printDiv = (elemId) => {
                             >
                               <table class="lines border">
                                 <thead
+                                  v-if="item.etudiants.length > 0"
                                   class="table-header-group bg-sky-500"
                                   style="
                                     background-color: rgb(
@@ -360,17 +379,17 @@ const printDiv = (elemId) => {
                                       "
                                       class="py-2 md:py-1 pl-5 item text font-semibold text-alignment-left text-left text-white border-radius-first"
                                     >
-                                      #Numero D'order
+                                      Numero D'order
                                     </th>
                                     <th
                                       class="py-2 md:py-1 pl-5 item text font-semibold text-alignment-left text-left text-white border-radius-first"
                                     >
-                                      Nom et Prenom
+                                      Nom et Prénom
                                     </th>
                                     <th
                                       class="quantity text font-semibold text-alignment-left text-left text-white"
                                     >
-                                      Apogee
+                                      Apogée
                                     </th>
                                     <th
                                       class="price text font-semibold text-alignment-right text-right text-white"
@@ -431,7 +450,7 @@ const printDiv = (elemId) => {
                                       {{ surveillant.cne }}
                                     </td>
                                   </tr>
-                                  <tr v-if="item.etudiants.length == 1">
+                                  <tr v-if="item.etudiants.length == 0">
                                     Pas encore de etudiants...
                                   </tr>
                                 </tbody>

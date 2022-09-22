@@ -55,9 +55,9 @@ class BaseDataService {
     });
   }
 
-  createPv(INSTRUCTOR, filiere, semester, modul, time) {
+  createPv(INSTRUCTOR, filiere, semester, modul, time, date) {
     return axios.get(
-      `${this.API_URL}/${INSTRUCTOR}/${filiere}/${semester}/${modul}/${time}`,
+      `${this.API_URL}/${INSTRUCTOR}/${filiere}/${semester}/${modul}/${time}/${date}`,
       {
         headers: {
           Authorization: `Bearer ${
@@ -79,7 +79,7 @@ class BaseDataService {
   }
 
   uploadExcel(INSTRUCTOR, file) {
-    return axios.post(`${this.API_URL}/${INSTRUCTOR}/upload`, file, {
+    return axios.post(`${this.API_URL}/${INSTRUCTOR}/upload/new`, file, {
       headers: {
         Authorization: `Bearer ${
           !!user?.access_token ? user.access_token : ""
@@ -95,19 +95,22 @@ class BaseDataService {
   }
 }
 
-// axios.interceptors.response.use(
-//   (response) => {
-//     return response;
-//   },
-//   (error) => {
-//     if (error.response.data.error_message.startsWith("The Token has expired")) {
-//       // useAuthStore().logout(), 4000;
-//       console.log("token expired", error.response);
-
-//       /* THIS WORKS BUT BREAKS THE LOGIN ERROR HANDLING */
-//     }
-//     return Promise.reject(error);
-//   }
-// );
+// setTimeout(() => {
+  // axios.interceptors.response.use(
+  //   (response) => {
+  //     return response;
+  //   },
+  //   (error) => {
+  //     if (error.response.data?.error_message?.startsWith("The Token has expired")) {
+  //       setTimeout(() => {useAuthStore().logout()}, 4000);
+  //       console.log("token expired", error.response);
+  
+        /* THIS WORKS BUT BREAKS THE LOGIN ERROR HANDLING */
+      // }
+      // return Promise.reject(error);
+    // }
+  // );
+  
+// }, 4000);
 
 export default new BaseDataService();

@@ -43,14 +43,24 @@ const submit = () => {
         main
       >
       </SectionTitleLineWithButton> -->
-      <CardBox title="Forms" :icon="mdiBallot" form @submit.prevent="submit">
-        <FormField label="please enter departement name">
+      <CardBox
+        title="Formulaire"
+        :icon="mdiBallot"
+        form
+        @submit.prevent="submit"
+      >
+        <FormField label="veuillez entrer le nom du département">
           <FormControl v-model="departement.name" :icon="mdiAccount" />
         </FormField>
         <template #footer>
           <BaseButtons>
-            <BaseButton type="submit" color="info" label="Submit" />
-            <BaseButton type="reset" color="info" outline label="Reset" />
+            <BaseButton type="submit" color="info" label="Créer" />
+            <BaseButton
+              type="reset"
+              color="info"
+              outline
+              label="Réinitialiser"
+            />
           </BaseButtons>
         </template>
       </CardBox>
