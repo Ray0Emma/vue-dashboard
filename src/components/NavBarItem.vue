@@ -49,7 +49,10 @@ const componentClass = computed(() => {
 
 const CurrentUser = JSON.parse(localStorage.getItem("user"));
 const itemLabel = computed(() =>
-  props.item.isCurrentUser ? CurrentUser.username : props.item.label
+  props.item.isCurrentUser
+    ? CurrentUser.username.charAt(0).toUpperCase() +
+      CurrentUser.username.slice(1)
+    : props.item.label
 );
 
 const isDropdownActive = ref(false);
