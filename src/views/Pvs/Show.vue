@@ -97,7 +97,7 @@ const printDiv = (elemId) => {
     window.frames["frame1"].focus();
     window.frames["frame1"].print();
     document.body.removeChild(frame1);
-  }, 500);
+  }, 900);
   return false;
 };
 </script>
