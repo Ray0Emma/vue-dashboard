@@ -253,7 +253,7 @@ const printDiv = (elemId) => {
                             <img
                               src="http://www.fpbm.ma/new/img/fplogo_145x154.png"
                               alt="fpbm logo"
-                              class="relative object-contain"
+                              class="relative object-contain max-h-28"
                             />
                           </div>
                           <div class="flex justify-end col-span-1">
@@ -266,32 +266,44 @@ const printDiv = (elemId) => {
                                 item.localDate
                               "
                               src=""
-                              class="relative object-contain max-h-32"
+                              class="relative object-contain max-h-28"
                             />
                           </div>
                         </div>
 
                         <div
-                          class="row grid grid-rows-2 grid-flow-col gap-1 pb-5 mb-5"
+                          class="flex grid grid-cols-4 grid-flow-col gap-4 py-10"
+                          :id="
+                            'input_' +
+                            item.filier +
+                            item.localDateTime +
+                            item.local +
+                            item.localDate
+                          "
                         >
-                          <div
-                            class="col-42 row-span-2"
-                            :id="
-                              'input_' +
-                              item.filier +
-                              item.localDateTime +
-                              item.local +
-                              item.localDate
-                            "
-                          >
-                            <div class="text-center">
-                              <p class="text-normal font-semibold">
-                                Filiere : {{ item.filier }}
-                              </p>
+                          <div class="flex justify-start col-span-1">
+                            <div class="text-dark">
+                              <p>Filière : {{ item.filier }}</p>
                               <p>Semester : {{ item.semester }}</p>
+                              <p>Salle : {{ item.local }}</p>
+                            </div>
+                          </div>
+                          <div class="flex justify-center col-span-2">
+                            <div class="text-dark">
+                              <h3 class="text-normal font-semibold">
+                                Fiche D'absense
+                              </h3>
+                              <span class="text-sm"
+                                >A.U : {{ new Date().getFullYear() }}-{{
+                                  new Date().getFullYear() + 1
+                                }}</span
+                              >
+                            </div>
+                          </div>
+                          <div class="flex justify-end col-span-1">
+                            <div class="text-dark">
                               <p>Heure : {{ item.localDateTime }}</p>
                               <p>Date : {{ item.localDate }}</p>
-                              <p>Salle : {{ item.local }}</p>
 
                               <p class="text-sm">Module : {{ item.module }}</p>
                             </div>
@@ -406,7 +418,7 @@ const printDiv = (elemId) => {
                                       "
                                       class="py-2 md:py-1 pl-5 item text font-semibold text-alignment-left text-left text-white border-radius-first"
                                     >
-                                      Numero D'order
+                                      Numéro D'order
                                     </th>
                                     <th
                                       class="py-2 md:py-1 pl-5 item text font-semibold text-alignment-left text-left text-white border-radius-first"
