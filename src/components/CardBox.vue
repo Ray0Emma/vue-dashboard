@@ -81,6 +81,7 @@ const submit = (e) => {
         {{ title }}
       </div>
       <button
+        v-if="title"
         class="flex items-center py-3 px-4 justify-center ring-blue-700 focus:ring"
         @click="headerIconClick"
       >

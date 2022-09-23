@@ -63,7 +63,9 @@ router.beforeEach((to, from, next) => {
   if (from.name !== "Login" && to.name !== "Login" && !isAuthenticated) 
   // {
     // Not logged in? You get booted to /login
-    setTimeout(()=>next({ name: "Login" }),3000);
+    // setTimeout(()=>
+    next({ name: "Login" })
+    // ,3000);
   
   
   else 

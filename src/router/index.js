@@ -6,7 +6,7 @@ import Home from "@/views/HomeView.vue";
 const routes = [
   {
     meta: {
-      title: "Login",
+      title: "Connexion",
     },
     path: "/",
     name: "Login",
@@ -67,69 +67,60 @@ const routes = [
     component: () => import("@/views/professors/Index.vue"),
   },
   {
+    meta: {
+      title: "Professors",
+    },
     path: "/professors/:id",
     name: "edit-professors",
     component: () => import("@/views/professors/Edit.vue"),
   },
   {
+    meta: {
+      title: "Ajouter Professeur",
+    },
     path: "/professors/add",
     name: "add-professors",
     component: () => import("@/views/professors/Create.vue"),
   },
   {
+    meta: {
+      title: "Ajouter Pv",
+    },
     path: "/pv/add",
     name: "add-pv",
     component: () => import("@/views/Pvs/Create.vue"),
   },
   {
+    meta: {
+      title: "Pv",
+    },
     path: "/pv/show/:filiere/:semester/:module/:time/:date",
     name: "show-pv",
     component: () => import("@/views/Pvs/Show.vue"),
   },
   {
+    meta: {
+      title: "Pv",
+    },
     path: "/pv/index",
     name: "index-pv",
     component: () => import("@/views/Pvs/Index.vue"),
   },
   {
     meta: {
-      title: "Profile",
+      title: "Profil",
     },
     path: "/profile",
     name: "profile",
     component: () => import("@/views/ProfileView.vue"),
   },
-  // {
-  //   meta: {
-  //     title: 'Ui'
-  //   },
-  //   path: '/ui',
-  //   name: 'ui',
-  //   component: () => import('@/views/UiView.vue')
-  // },
-  // {
-  //   meta: {
-  //     title: 'Responsive layout'
-  //   },
-  //   path: '/responsive',
-  //   name: 'responsive',
-  //   component: () => import('@/views/ResponsiveView.vue')
-  // },
-  // {
-  //   meta: {
-  //     title: 'Login'
-  //   },
-  //   path: '/login',
-  //   name: 'login',
-  //   component: () => import('@/views/LoginView.vue')
-  // },
   {
     meta: {
-      title: "Error",
+      title: "Aide",
     },
-    path: "/error",
-    name: "error",
-    component: () => import("@/views/ErrorView.vue"),
+    path: "/help",
+    name: "help",
+    component: () => import("@/views/Help.vue"),
   },
 ];
 
