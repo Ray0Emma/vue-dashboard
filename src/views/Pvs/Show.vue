@@ -419,7 +419,7 @@ const printDiv = (elemId) => {
                                       "
                                       class="py-2 md:py-1 pl-5 item text font-semibold text-alignment-left text-left text-white border-radius-first"
                                     >
-                                      Numésro D'order
+                                      Numéro D'order
                                     </th>
                                     <th
                                       class="py-2 md:py-1 pl-5 item text font-semibold text-alignment-left text-left text-white border-radius-first"
