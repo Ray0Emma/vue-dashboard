@@ -129,7 +129,7 @@ const printDiv = (elemId) => {
                       scope="col"
                       class="w-4/12 table-title sm:table-cell hidden pr-6 text-left py-3 text-xs font-medium text-black dark:text-gray-300 tracking-wider"
                     >
-                      <div class="font-medium truncate">Filiere</div>
+                      <div class="font-medium truncate">Filière</div>
                       <div class="font-normal truncate">Module</div>
                     </th>
                     <th
@@ -390,7 +390,7 @@ const printDiv = (elemId) => {
                         </div>
                         <div class="mt-4">
                           <div class="col-100">
-                            Les etudiants :
+                            Les étudiants :
                             <div
                               class="overflow-x-auto relative rounded-lg mt-7"
                             >
@@ -419,7 +419,7 @@ const printDiv = (elemId) => {
                                       "
                                       class="py-2 md:py-1 pl-5 item text font-semibold text-alignment-left text-left text-white border-radius-first"
                                     >
-                                      Numéro D'order
+                                      Nº D'order
                                     </th>
                                     <th
                                       class="py-2 md:py-1 pl-5 item text font-semibold text-alignment-left text-left text-white border-radius-first"
@@ -437,9 +437,14 @@ const printDiv = (elemId) => {
                                       CNI
                                     </th>
                                     <th
-                                      class="pr-5 total text font-semibold text-white text-alignment-right text-right border-radius-last"
+                                      class="pr-5 total text font-semibold text-white text-alignment-right text-right"
                                     >
                                       CNE
+                                    </th>
+                                    <th
+                                      class="pr-4 total text font-semibold text-white text-alignment-right text-right border-radius-last"
+                                    >
+                                      ABS
                                     </th>
                                   </tr>
                                 </thead>
@@ -489,9 +494,17 @@ const printDiv = (elemId) => {
                                     >
                                       {{ surveillant.cne }}
                                     </td>
+                                    <td
+                                      style="display: revert"
+                                      class="total text-black text-alignment-right text-right border-b-0"
+                                    >
+                                      <div
+                                        class="inline-block align-baseline pb-1/2 border w-1/2"
+                                      ></div>
+                                    </td>
                                   </tr>
                                   <tr v-if="item.etudiants.length == 0">
-                                    Pas encore de etudiants...
+                                    Pas encore d'étudiants...
                                   </tr>
                                 </tbody>
                               </table>
