@@ -7,8 +7,7 @@ import router from "@/router";
 
 const baseUrl = "http://localhost:8080";
 
-export const useAuthStore = defineStore({
-  id: "auth",
+export const useAuthStore = defineStore('auth', {
   state: () => ({
     // initialize state from local storage to enable user to stay logged in
     user: localStorage.getItem("user"),

@@ -11,6 +11,7 @@ import { useAuthStore } from "@/stores/auth.store";
 import { darkModeKey, styleKey } from "@/config.js";
 
 import "./css/main.css";
+import axios from "axios";
 
 /* Init Pinia */
 const pinia = createPinia();
@@ -43,6 +44,12 @@ if (
 /* Default title tag */
 const defaultDocumentTitle = "FPBM";
 
+axios.interceptors.request.use(function (config) {
+  const token = JSON.parse(localStorage.getItem('user'));
+  config.headers.Authorization =  `Bearer ${token.access_token}`;
+
+  return config;
+});
 /* Collapse mobile aside menu on route change */
 router.beforeEach(() => {
   layoutStore.isAsideMobileExpanded = false;
