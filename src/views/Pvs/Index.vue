@@ -110,12 +110,12 @@ const printDiv = (elemId) => {
           >
             Nouveau pv</router-link
           >
-          <a
+          <!-- <a
             @click=""
             class="ml-7 px-3 py-1.5 mb-3 cursor-pointer sm:mb-0 rounded-xl text-sm font-medium leading-6 bg-blue-500 hover:bg-blue-600 text-white disabled:bg-green-100"
           >
             Imprimer tout</a
-          >
+          > -->
         </div>
       </div>
       <div class="flex flex-col lg:flex-row mt-14 w-full">
